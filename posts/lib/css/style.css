@@ -1,5 +1,134 @@
 body {
-  background-color: green;
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+main .postSection {
+  flex: 4;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+main .postSection .post {
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  background-color: white;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+}
+main .postSection .post .poster {
+  padding: clamp(1.5rem, 3rem, 5rem);
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  display: flex;
+  text-align: left;
+  align-items: center;
+  gap: 2rem;
+}
+main .postSection .post .poster > img {
+  border-radius: 5rem;
+  width: clamp(4rem, 8%, 10rem);
+}
+main .postSection .post .poster > h1 {
+  margin: 0;
+}
+main .postSection .post .poster > h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+main .postSection .post .postTitle {
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+}
+main .postSection .post .postTitle > hr {
+  width: 80%;
+}
+main .postSection .post .postImg {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1.5rem;
+}
+main .postSection .post .postImg > img {
+  width: clamp(40rem, 70%, 80rem);
+}
+main .postSection .post .postWord {
+  padding: clamp(1.5rem, 3rem, 5rem);
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+main .postSection .post .post_ImgLeft {
+  display: flex;
+  font-size: 1.2rem;
+  padding: clamp(1.5rem, 3rem, 5rem);
+  padding-top: 0;
+  padding-bottom: 1rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+main .postSection .post .post_ImgLeft > div:first-of-type {
+  flex: 1;
+  text-align: center;
+}
+main .postSection .post .post_ImgLeft > div:first-of-type > img {
+  width: clamp(2rem, 15rem, 40rem);
+}
+main .postSection .post .post_ImgLeft > div:last-of-type {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+main .postSection .post .post_ImgRight {
+  display: flex;
+  font-size: 1.2rem;
+  padding: clamp(1.5rem, 3rem, 5rem);
+  padding-top: 0;
+  padding-bottom: 1rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+main .postSection .post .post_ImgRight > div:last-of-type {
+  flex: 1;
+  text-align: center;
+}
+main .postSection .post .post_ImgRight > div:last-of-type > img {
+  width: clamp(2rem, 15rem, 40rem);
+}
+main .postSection .post .post_ImgRight > div:first-of-type {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+main .contacts {
+  flex: 1;
+  color: #F0F3BD;
+  text-align: left;
+}
+main .contacts > hr {
+  width: 90%;
+  margin: 0;
+  padding: 0;
+}
+main .contacts .friends {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  gap: 2rem;
+}
+main .contacts .friends > img {
+  border-radius: 5rem;
+  width: clamp(3rem, 10%, 10rem);
 }
 
 /*# sourceMappingURL=style.css.map */
