@@ -6,14 +6,37 @@ body {
 main {
   display: flex;
   flex-wrap: wrap;
-  gap: 3rem;
+  gap: 5rem;
 }
 main .postSection {
   flex: 4;
   padding: 1rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
+}
+main .postSection .user {
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  background-color: white;
+  border-radius: 0.25rem;
+  display: flex;
+  transition: all ease-out 0.2s;
+}
+main .postSection .user > button {
+  flex: 1;
+  border-radius: 0.25rem;
+  font-size: 3rem;
+  padding: 3rem 1rem;
+  border: none;
+  margin: 0.75rem;
+  transition: all ease-out 0.2s;
+}
+main .postSection .user > button:hover {
+  color: white;
+  background-color: #05668D;
+}
+main .postSection .user:hover {
+  background-color: #00A896;
 }
 main .postSection .post {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
@@ -21,6 +44,10 @@ main .postSection .post {
   border-radius: 0.75rem;
   display: flex;
   flex-direction: column;
+  transition: all ease-out 0.2s;
+}
+main .postSection .post:hover {
+  transform: translateY(-2.5%);
 }
 main .postSection .post .poster {
   padding: clamp(1.5rem, 3rem, 5rem);
@@ -33,12 +60,12 @@ main .postSection .post .poster {
 }
 main .postSection .post .poster > img {
   border-radius: 5rem;
-  width: clamp(4rem, 8%, 10rem);
+  width: clamp(4rem, 6%, 10rem);
 }
 main .postSection .post .poster > h1 {
   margin: 0;
 }
-main .postSection .post .poster > h2 {
+main .postSection .post .poster > p {
   margin: 0;
   font-size: 1rem;
 }
@@ -59,7 +86,7 @@ main .postSection .post .postImg > img {
   width: clamp(40rem, 70%, 80rem);
 }
 main .postSection .post .postWord {
-  padding: clamp(1.5rem, 3rem, 5rem);
+  padding: clamp(1.5rem, 4rem, 5rem);
   padding-top: 1rem;
   padding-bottom: 1.5rem;
   font-size: 1.2rem;
@@ -67,7 +94,7 @@ main .postSection .post .postWord {
 main .postSection .post .post_ImgLeft {
   display: flex;
   font-size: 1.2rem;
-  padding: clamp(1.5rem, 3rem, 5rem);
+  padding: clamp(1.5rem, 4rem, 5rem);
   padding-top: 0;
   padding-bottom: 1rem;
   gap: 2rem;
@@ -90,7 +117,7 @@ main .postSection .post .post_ImgLeft > div:last-of-type {
 main .postSection .post .post_ImgRight {
   display: flex;
   font-size: 1.2rem;
-  padding: clamp(1.5rem, 3rem, 5rem);
+  padding: clamp(1.5rem, 4rem, 5rem);
   padding-top: 0;
   padding-bottom: 1rem;
   gap: 2rem;
@@ -124,7 +151,12 @@ main .contacts .friends {
   display: flex;
   text-align: left;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
+  font-size: 1rem;
+  transition: all ease-out 0.2s;
+}
+main .contacts .friends:hover {
+  transform: translateY(-10%);
 }
 main .contacts .friends > img {
   border-radius: 5rem;
