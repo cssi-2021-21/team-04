@@ -9,3 +9,33 @@ firebase.initializeApp({
     messagingSenderId: "691973782453",
     appId: "1:691973782453:web:f2748f5aa67bdbd35ff7fc"
 });
+
+const activities = [
+    "run",
+    "treadmill",
+    "hiking",
+    "weight",
+    "cycling",
+    "elliptical",
+    "spinning",
+    "yoga",
+    "stair-climber",
+    "circuit-training",
+    "bootcamp",
+    "pilates",
+    "kickboxing",
+    "tennis",
+    "martial-arts",
+    "golf",
+    "walk",
+    "workout",
+    "swim",
+];
+
+activities.forEach(e=>{
+    let optionEx = document.createElement("option");
+    optionEx.value = e;
+    optionEx.text = e.charAt(0).toUpperCase() + e.substr(1).toLowerCase();
+    document.querySelector("#exercise").appendChild(optionEx);
+})
+
