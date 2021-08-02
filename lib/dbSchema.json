@@ -1,29 +1,31 @@
 // users
-  // friends
-  // workouts
+// friends
+// workouts
 // posts
 {
-  "users":[
-    "exampleUSERID":{
-      "name":"example name",
-      "workouts":[
-        "exampleWORKOUTID":{
-          "exercise":"running",
-          "duration": 12,
-          "calories": 110,
-          "dateTime": 11/21/21,
+    "users": {
+        "exampleUSERID": {
+            "name": "example name",
+            "workouts": {
+                "exampleWORKOUTID": {
+                    "exercise": "running",
+                    "duration": 12,
+                    "calories": 110,
+                    "dateTime": "11/21/21"
+                }
+            },
+            "friends": [
+                "userId",
+                "userID",
+                "userID"
+            ]
         }
-      ],
-      "friends":[
-        "userId", "userID", "userID"
-      ],
     },
-  ],
-  "posts":[
-    "examplePOSTID":{
-      "userID":"1232j3i21j3o1j2i",
-      "image":"url.png",
-      "text": "lorem ipsum"
+    "posts": {
+        "examplePOSTID": {
+            "userID": "1232j3i21j3o1j2i",
+            "image": "url.png",
+            "text": "lorem ipsum"
+        }
     }
-  ]
 }
