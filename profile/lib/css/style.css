@@ -1,5 +1,24 @@
 body {
-  background-color: green;
+  margin: 0;
+  background-color: #05668ddc;
+}
+
+.charts {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 2rem;
+}
+.charts > div {
+  flex: 1;
+  width: clamp(20rem, 70%, 75rem);
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.918);
+  margin: auto;
+  box-shadow: 10px 5px 5px #02c399c5;
+}
+.charts > div:last-of-type {
+  height: 40%;
 }
 
 /*# sourceMappingURL=style.css.map */
