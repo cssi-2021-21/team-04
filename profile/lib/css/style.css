@@ -1,6 +1,7 @@
 body {
   margin: 0;
-  background-color: #05668ddc;
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
 }
 
 .charts {
