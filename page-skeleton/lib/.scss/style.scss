@@ -1,0 +1,98 @@
+$color1: #05668D;
+$color2: #028090;
+$color3: #00A896;
+$color4: #02C39A;
+$color5: #F0F3BD;
+
+body {
+    background: rgb(2,128,144);
+    background: linear-gradient(135deg, rgba(2,128,144,1) 0%, rgba(0,168,150,1) 100%);
+    margin: 0;
+    display: grid;
+    grid-template-rows: min-content minmax(max-content, 1fr) min-content;
+    min-height: 100vh;
+    font-family: 'Open Sans', sans-serif;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+nav {
+    background-color: $color1;
+    color: white;
+    padding: 10px 16px;
+    position: sticky;
+    top: 0;
+    left: 0;
+    & > div.wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: center;
+        gap: 16px;
+        & > div.logo {
+            display: flex;
+            box-sizing: border-box;
+            align-items: center;
+            justify-content: flex-start;
+            flex: 1;
+            & > a {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                width: 100%;
+                box-sizing: border-box;
+                text-decoration: none;
+                color: white;
+                & > img {
+                    height: 40px;
+                    width: auto;
+                }
+                & > span {
+                    flex: 1;
+                    font-size: 1.6rem;
+                    white-space: nowrap;
+                    text-transform: lowercase;
+                }
+            }
+        }
+        & > div.links {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 24px;
+            & > a {
+                text-decoration: none;
+                color: white;
+                font-size: 1.1rem;
+                white-space: nowrap;
+                border-top: 2px solid transparent;
+                border-bottom: 2px solid transparent;
+                transition: border-color 0.2s;
+                text-transform: lowercase;
+                &:hover {
+                    border-bottom-color: $color4;
+                }
+            }
+        }
+    }
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    background-color: $color1;
+    & > p {
+        margin: 0;
+        font-size: small;
+        color: white;
+    }
+}

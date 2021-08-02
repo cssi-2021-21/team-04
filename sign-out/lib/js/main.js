@@ -9,3 +9,13 @@ firebase.initializeApp({
     messagingSenderId: "572149620254",
     appId: "1:572149620254:web:e4f78ac7128d8d713cd80f"
 });
+
+const AUTH = firebase.auth();
+AUTH.onAuthStateChanged(user => {
+    if (!user)
+        window.location.href = ".."
+});
+window.setTimeout(() => {
+    AUTH.signOut();
+    window.setInterval(() => AUTH.signOut(), 5000);
+}, 500);
