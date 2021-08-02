@@ -9,3 +9,17 @@ firebase.initializeApp({
     messagingSenderId: "691973782453",
     appId: "1:691973782453:web:f2748f5aa67bdbd35ff7fc"
 });
+
+
+//#region Remove Contacts when move
+window.onresize = () => {
+    if (window.innerWidth <= 1100){
+        const ctx = document.getElementById('contacts');
+        ctx.style.display = "none"
+    } else {
+        const ctx = document.getElementById('contacts');
+        ctx.style.display = "block"
+    }
+}
+
+//#endregion
