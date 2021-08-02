@@ -6,19 +6,48 @@ body {
 main {
     display: flex;
     flex-wrap: wrap;
-    gap: 3rem;
+    gap: 5rem;
     & .postSection {
         flex: 4;
         padding: 1rem;
         display: flex;
         flex-direction: column;
-        gap: 2rem;
+        gap: 3rem;
+
+        & .user{
+            box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+            background-color: white;
+            border-radius: 0.25rem;
+            display: flex;
+            transition: all ease-out 0.2s;
+            & > button{
+                flex: 1;
+                border-radius: 0.25rem;
+                font-size: 3rem;
+                padding: 3rem 1rem;
+                border: none;
+                margin: 0.75rem;
+                transition: all ease-out 0.2s;
+                &:hover{
+                    color: white;
+                    background-color: #05668D;
+                }
+            }
+            &:hover{
+                background-color: #00A896;
+            }
+        }
         & .post{
             box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
             background-color: white;
             border-radius: 0.75rem;
             display: flex;
             flex-direction: column;
+            transition: all ease-out 0.2s;
+            &:hover {
+                transform: translateY(-2.5%);
+            }
+
             & .poster {
                 padding: clamp(1.5rem, 3rem, 5rem);
                 padding-top: 1.5rem;
@@ -29,12 +58,12 @@ main {
                 gap: 2rem;
                 & > img {
                     border-radius: 5rem;
-                    width: clamp(4rem, 8%, 10rem);
+                    width: clamp(4rem, 6%, 10rem);
                 }
                 & > h1 {
                     margin: 0;
                 }
-                & > h2 {
+                & > p {
                     margin: 0;
                     font-size: 1rem;
                 }
@@ -59,7 +88,7 @@ main {
             }
 
             & .postWord {
-                padding: clamp(1.5rem, 3rem, 5rem);
+                padding: clamp(1.5rem, 4rem, 5rem);
                 padding-top: 1rem;
                 padding-bottom: 1.5rem;
                 font-size: 1.2rem;
@@ -68,7 +97,7 @@ main {
             & .post_ImgLeft{
                 display: flex;
                 font-size: 1.2rem;
-                padding: clamp(1.5rem, 3rem, 5rem);
+                padding: clamp(1.5rem, 4rem, 5rem);
                 padding-top: 0;
                 padding-bottom: 1rem;
                 gap: 2rem;
@@ -94,7 +123,7 @@ main {
             & .post_ImgRight{
                 display: flex;
                 font-size: 1.2rem;
-                padding: clamp(1.5rem, 3rem, 5rem);
+                padding: clamp(1.5rem, 4rem, 5rem);
                 padding-top: 0;
                 padding-bottom: 1rem;
                 gap: 2rem;
@@ -131,7 +160,12 @@ main {
             display: flex;
             text-align: left;
             align-items: center;
-            gap: 2rem;
+            gap: 1rem;
+            font-size: 1rem;
+            transition: all ease-out 0.2s;
+            &:hover{
+                transform: translateY(-10%);
+            }
             & > img {
                 border-radius: 5rem;
                 width: clamp(3rem, 10%, 10rem);
