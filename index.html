@@ -6,6 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Peer-fit </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./lib/css/style.css">
 
     <script defer src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
@@ -18,37 +22,59 @@
         Animate.css
         https://animate.style/ == Website Link
     -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/> -->
 
     <script defer src="./lib/js/main.js"></script>
 </head>
 
 <body>
-    <!-- Example
-        animate__animated = for the animation to work
-        animate__bounce = Type of animation you want
-        animate__delay-2s = Delay time
-        animated__slow animate__slower animate__fast animate_faster || For speed
-        <h1 class="animated__animated "> Hello World </h1>
-        ⢸⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⠉⡷⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠢⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-        ⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀⠀⠈⠑⢦⡀⠀⠀⠀⠀⠀Are you winning Youssef?
-        ⢸⠀⠀⠀⠀⢀⠖⠒⠒⠒⢤⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠙⢦⡀⠀⠀⠀⠀
-        ⢸⠀⠀⣀⢤⣼⣀⡠⠤⠤⠼⠤⡄⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠙⢄⠀⠀⠀⠀
-        ⢸⠀⠀⠑⡤⠤⡒⠒⠒⡊⠙⡏⠀⢀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠑⠢⡄⠀
-        ⢸⠀⠀⠀⠇⠀⣀⣀⣀⣀⢀⠧⠟⠁⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡇⠀
-        ⢸⠀⠀⠀⠸⣀⠀⠀⠈⢉⠟⠓⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸
-        ⢸⠀⠀⠀⠀⠈⢱⡖⠋⠁⠀⠀⠀⠀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸
-        ⢸⠀⠀⠀⠀⣠⢺⠧⢄⣀⠀⠀⣀⣀⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀  ⢸
-        ⢸⠀⠀⠀⣠⠃⢸⠀⠀⠈⠉⡽⠿⠯⡆⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸
-        ⢸⠀⠀⣰⠁⠀⢸⠀⠀⠀⠀⠉⠉⠉⠀⠀⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢸
-        ⢸⠀⠀⠣⠀⠀⢸⢄⠀⠀⠀⠀⠀⠀⠀⠀   ⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸
-        ⢸⠀⠀⠀⠀⠀⢸⠀⢇⠀⠀⠀⠀⠀⠀⠀⠀ ⢸⠀⠀⠀⠀⠀⠀⠀⠀⠀ ⢸
-        ⢸⠀⠀⠀⠀⠀⡌⠀⠈⡆⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀       ⠀⠀ ⢸
-        ⢸⠀⠀⠀⠀⢠⠃⠀⠀⡇⠀⠀⠀⠀⠀⠀    ⠀⠀⠀⠀⠀⠀⠀⠀       ⢸
-        ⢸⠀⠀⠀⠀⢸⠀⠀⠀⠁⠀⠀⠀⠀⠀                                  ⠀⢸
-    -->
-    <h1 class="animate__animated animate__bounce">Hello World</h1>
+    <main>
+        <section>
+            <div class="left">
+                <div class="logo">
+                    <img src="./assets/logo.svg" alt="logo">
+                    <h1>Peer-fit</h1>
+                </div>
+                <div class="slogan">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam, tempora!</p>
+                </div>
+            </div>
+            <div class="right">
+                <div class="externals">
+                    <button data-id="google">
+                        <img src="./assets/google-logo.svg" alt="external logo">
+                        <span>Continue with Google</span>
+                        <img class="spacer" src="./assets/google-logo.svg" alt="external logo">
+                    </button>
+                    <!-- <button>
+                        <img src="" alt="external logo">
+                        <span>Continue with NAME</span>
+                        <img class="spacer" src="" alt="external logo">
+                    </button> -->
+                </div>
+                <div class="form">
+                    <div class="error">
+                        <p>Lorem ipsum dolor sit amet.</p>
+                    </div>
+                    <div class="field">
+                        <p>Email</p>
+                        <input type="email" required spellcheck="false">
+                    </div>
+                    <div class="field">
+                        <p>Password</p>
+                        <input type="password" required>
+                    </div>
+                    <div class="action">
+                        <button class="main">Sign In</button>
+                        <button>Sign Up</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; Copyright 2021, Peer-fit. All rights reserved.</p>
+    </footer>
 </body>
 
 </html>
