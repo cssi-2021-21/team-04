@@ -15,6 +15,8 @@
     <script defer src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
     
     <script defer src="./lib/js/main.js"></script>
+    <script defer src="./lib/js/readExercises.js"></script>
+    <script defer src="./lib/js/writeExercises.js"></script>
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
@@ -36,10 +38,6 @@
     <!-- exercise selector with options and a textbox for duration -->
     <select id="exercise" name="exercise">
         <option value="" disabled selected>Select an exercise</option>
-        <option value="running">Running</option>
-        <option value="swimming">Swimming</option>
-        <option value="dancing">Dancing</option>
-        <option value="yoga">Yoga</option>
     </select>
     <input type="number" name="duration" id="duration">
     <button id="submitExercise">Submit Workout</button>
