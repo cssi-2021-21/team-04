@@ -1,4 +1,6 @@
 const container = document.querySelector("#profileContainer")
+let userId;
+
 firebase.auth().onAuthStateChanged(function (user) {
   if (user) {
     console.log('Logged in as: ' + user.displayName);
@@ -11,10 +13,11 @@ firebase.auth().onAuthStateChanged(function (user) {
 });
 
 const getExercises = (userId) => {
-  const notesRef = firebase.database().ref(`users/${userId}`);
-    notesRef.on('value', (snapshot) => {
+  const workouts = firebase.database().ref(`users/${userId}/workouts`);
+    workouts.on('value', (snapshot) => {
     const data = snapshot.val();
     console.log(data);
+    renderHTML(data);
   });  
 }
 
@@ -25,9 +28,10 @@ const renderHTML = (data) => {
     console.log(exerciseObj);
     //Profile exercise template
     domTemplate+=`
-      <div>
-        <p>Exercise: ${exerciseObj.exercise}</p>
-        <p>Duration: ${exerciseObj.duration}</p>
+      <div class="workoutCard">
+        <p>${exerciseObj.duration} minute ${exerciseObj.exercise.charAt(0).toUpperCase() + exerciseObj.exercise.substr(1).toLowerCase()}</p>
+        <p>You burned ${exerciseObj.calories} calories!</p>
+        <p>${new Date(exerciseObj.dateTime)}</p>
       </div>
     `
   };
