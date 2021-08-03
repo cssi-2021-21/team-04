@@ -1,15 +1,32 @@
 body {
+  position: relative;
   background: #028090;
   background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
+}
+
+.contactHR {
+  overflow: visible;
+  /* For IE */
+  padding: 0;
+  border: none;
+  border-top: medium double white;
+  color: black;
+  text-align: center;
 }
 
 main {
   display: flex;
   flex-wrap: wrap;
-  gap: 5rem;
+  gap: clamp(0.2rem, 1rem, 2rem);
 }
 main .postSection {
-  flex: 4;
+  flex: 5;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -20,6 +37,8 @@ main .postSection .user {
   background-color: white;
   border-radius: 0.25rem;
   display: flex;
+  width: clamp(28rem, 90%, 120rem);
+  margin: auto;
   transition: all ease-out 0.2s;
 }
 main .postSection .user > button {
@@ -39,6 +58,8 @@ main .postSection .user:hover {
   background-color: #00A896;
 }
 main .postSection .post {
+  width: clamp(28rem, 90%, 120rem);
+  margin: auto;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
   background-color: white;
   border-radius: 0.75rem;
@@ -139,8 +160,9 @@ main .postSection .post .post_ImgRight > div:first-of-type {
 }
 main .contacts {
   flex: 1;
-  color: #F0F3BD;
+  color: white;
   text-align: left;
+  user-select: none;
 }
 main .contacts > hr {
   width: 90%;
@@ -154,6 +176,7 @@ main .contacts .friends {
   gap: 1rem;
   font-size: 1rem;
   transition: all ease-out 0.2s;
+  padding-top: 1rem;
 }
 main .contacts .friends:hover {
   transform: translateY(-10%);
@@ -161,6 +184,95 @@ main .contacts .friends:hover {
 main .contacts .friends > img {
   border-radius: 5rem;
   width: clamp(3rem, 10%, 10rem);
+}
+main .contacts .friends > div {
+  display: flex;
+  flex-direction: column;
+}
+main .contacts .friends > div > hr {
+  width: 100%;
+}
+main .contacts .friends > div > p {
+  margin: 0;
+}
+main .contacts .friends > div > h2 {
+  margin: 0;
+}
+
+.online {
+  border: 3px solid white;
+  padding: 2px;
+}
+
+.offline {
+  border: 3px solid #ff7171;
+  padding: 2px;
+}
+
+.contactsFixed {
+  position: fixed;
+  color: red;
+  top: 0;
+  right: 0;
+  flex: 1;
+  color: white;
+  text-align: left;
+  user-select: none;
+  background-color: #05668D;
+  height: 100%;
+  padding: 1rem;
+  transform: translateX(100%);
+}
+.contactsFixed > hr {
+  width: 90%;
+  margin: 0;
+  padding: 0;
+}
+.contactsFixed .friends {
+  display: flex;
+  text-align: left;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  transition: all ease-out 0.2s;
+  padding-top: 1rem;
+}
+.contactsFixed .friends:hover {
+  transform: translateY(-10%);
+}
+.contactsFixed .friends > img {
+  border-radius: 5rem;
+  width: clamp(3rem, 10%, 10rem);
+}
+.contactsFixed .friends > div {
+  display: flex;
+  flex-direction: column;
+}
+.contactsFixed .friends > div > hr {
+  width: 100%;
+}
+.contactsFixed .friends > div > p {
+  margin: 0;
+}
+.contactsFixed .friends > div > h2 {
+  margin: 0;
+}
+
+.contactsBtn {
+  position: fixed;
+  bottom: 2%;
+  right: 2%;
+  border-radius: 5rem;
+  background-color: #05668D;
+  color: white;
+  display: grid;
+  place-items: center;
+  padding: 0.75rem;
+  transition: ease-out all 0.2s;
+  opacity: 0.5;
+}
+.contactsBtn:hover {
+  opacity: 1;
 }
 
 /*# sourceMappingURL=style.css.map */

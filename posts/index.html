@@ -23,6 +23,7 @@
         
     </nav>
     <main>
+        <!-- Remove the user section and put it in nav-->
         <div class="postSection">
             <div class="user">
                 <button> New Post</button>
@@ -85,27 +86,92 @@
             </div>
         </div>
         <!-- Onresize let's remove the friends-->
+        <!-- On second thought. Let's make it sticky: 8/2-->
         <div class="contacts" id="contacts">
             <h1> Contacts </h1>
-            <hr>
+            <hr class="contactHR">
             <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                <h1> { Name } </h1>
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
             <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                <h1> { Name } </h1>
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
             <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                <h1> { Name } </h1>
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
             <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                <h1> { Name } </h1>
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
         </div>
     </main>
+
+    <footer>
+        
+    </footer>
+
+    <!-- Fixed Contacts -->
+    <section class="contactsFixed" id="contactsFixed">
+        <h1> Contacts </h1>
+        <hr>
+        <div class="friends">
+            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+            <div>
+                <h2> { Name } </h2>
+                <hr>
+                <p> Hello </p>
+            </div>
+        </div>
+        <div class="friends">
+            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+            <div>
+                <h2> { Name } </h2>
+                <hr>
+                <p> Hello </p>
+            </div>
+        </div>
+        <div class="friends">
+            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+            <div>
+                <h2> { Name } </h2>
+                <hr>
+                <p> Hello </p>
+            </div>
+        </div>
+        <div class="friends">
+            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
+            <div>
+                <h2> { Name } </h2>
+                <hr>
+                <p> Hello </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="contactsBtn" id="contactsBtn">
+        <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+        </svg>
+    </div>
 </body>
 
 </html>
