@@ -79,11 +79,19 @@ modal.style.display = "none"
 const phoneAlert = document.querySelector("#phoneAlert")
 phoneAlert.style.display = "none"
 
+
 const closeAlertBtn = document.querySelector("#closeAlert");
 closeAlertBtn.addEventListener('click', () => {
     const modal = document.querySelector("#modal")
     modal.style.display = "none"
 })
+
+const newPost = document.querySelector("#NewPost");
+newPost.addEventListener('click', () => {
+    modal.style.display = "grid"
+})
+
+
 
 //#endregion
 

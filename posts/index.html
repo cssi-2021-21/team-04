@@ -41,11 +41,11 @@
     <!-- Not doing this lmao-->
     <nav>
         <div>
-            <img src="assets/logo-png.png" alt="" srcset="">
+            <img src="assets/Real_Logo.png" alt="" srcset="">
             <h1> Peer-fit</h1>
         </div>
         <div>
-            <button> New Post </button>
+            <button id="NewPost"> New Post </button>
         </div>
         <div>
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
@@ -135,6 +135,89 @@
         <!-- Onresize let's remove the friends-->
         <!-- On second thought. Let's make it sticky: 8/2-->
         <div class="contacts" id="contacts">
+            <section>
+                <h1> Contacts </h1>
+                <hr class="contactHR">
+                <div class="friends">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+                <div class="friends">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+                <div class="friends">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+                <div class="friends">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h1> People you might know </h1>
+                <hr class="contactHR">
+                <div class="friends unknown">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+                <div class="friends unknown">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+                <div class="friends unknown">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+                <div class="friends unknown">
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
+                    <div>
+                        <h2> { Name } </h2>
+                        <hr>
+                        <p> Hello </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; Copyright 2021, Peer-fit. All rights reserved.</p>
+    </footer>
+
+    <!-- Fixed Contacts -->
+    <section class="contactsFixed" id="contactsFixed">
+        <section>
             <h1> Contacts </h1>
             <hr class="contactHR">
             <div class="friends">
@@ -169,49 +252,44 @@
                     <p> Hello </p>
                 </div>
             </div>
-        </div>
-    </main>
+        </section>
 
-    <footer>
-        
-    </footer>
-
-    <!-- Fixed Contacts -->
-    <section class="contactsFixed" id="contactsFixed">
-        <h1> Contacts </h1>
-        <hr>
-        <div class="friends">
-            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-            <div>
-                <h2> { Name } </h2>
-                <hr>
-                <p> Hello </p>
+        <section>
+            <h1> People you might know </h1>
+            <hr class="contactHR">
+            <div class="friends unknown">
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
-        </div>
-        <div class="friends">
-            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-            <div>
-                <h2> { Name } </h2>
-                <hr>
-                <p> Hello </p>
+            <div class="friends unknown">
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
-        </div>
-        <div class="friends">
-            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-            <div>
-                <h2> { Name } </h2>
-                <hr>
-                <p> Hello </p>
+            <div class="friends unknown">
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
-        </div>
-        <div class="friends">
-            <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
-            <div>
-                <h2> { Name } </h2>
-                <hr>
-                <p> Hello </p>
+            <div class="friends unknown">
+                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
+                <div>
+                    <h2> { Name } </h2>
+                    <hr>
+                    <p> Hello </p>
+                </div>
             </div>
-        </div>
+        </section>
     </section>
 
     <div class="contactsBtn" id="contactsBtn">

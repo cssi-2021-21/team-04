@@ -22,7 +22,7 @@ body {
 }
 .main .postSection {
   flex: 5;
-  padding: 1rem;
+  margin: 0rem 2rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
@@ -158,13 +158,16 @@ body {
   color: white;
   text-align: left;
   user-select: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
-.main .contacts > hr {
+.main .contacts > section > hr {
   width: 90%;
   margin: 0;
   padding: 0;
 }
-.main .contacts .friends {
+.main .contacts > section .friends {
   display: flex;
   text-align: left;
   align-items: center;
@@ -173,29 +176,29 @@ body {
   transition: all ease-out 0.2s;
   padding-top: 1rem;
 }
-.main .contacts .friends hr {
+.main .contacts > section .friends hr {
   border: 0;
   height: 1px;
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
 }
-.main .contacts .friends:hover {
+.main .contacts > section .friends:hover {
   transform: translateY(-10%);
 }
-.main .contacts .friends > img {
+.main .contacts > section .friends > img {
   border-radius: 5rem;
   width: clamp(3rem, 10%, 10rem);
 }
-.main .contacts .friends > div {
+.main .contacts > section .friends > div {
   display: flex;
   flex-direction: column;
 }
-.main .contacts .friends > div > hr {
+.main .contacts > section .friends > div > hr {
   width: 100%;
 }
-.main .contacts .friends > div > p {
+.main .contacts > section .friends > div > p {
   margin: 0;
 }
-.main .contacts .friends > div > h2 {
+.main .contacts > section .friends > div > h2 {
   margin: 0;
 }
 
@@ -223,6 +226,24 @@ body {
   padding: 1rem;
   transform: translateX(100%);
   box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.705);
+  overflow: auto;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+.contactsFixed::-webkit-scrollbar {
+  width: 10px;
+}
+.contactsFixed::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+.contactsFixed::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  border-radius: 0.2rem;
+}
+.contactsFixed::-webkit-scrollbar-thumb:hover {
+  filter: brightness(120%);
 }
 .contactsFixed > hr {
   width: 90%;
@@ -385,6 +406,24 @@ nav > div:last-of-type > svg {
 nav > div:last-of-type > svg:hover {
   fill: #05668D;
   transform: translateY(-5%);
+}
+
+footer {
+  margin: 0rem;
+  padding: 0rem;
+  margin-top: 2rem;
+  background-color: white;
+  text-align: center;
+  box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.582);
+}
+footer > p {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0.6rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
 }
 
 /*# sourceMappingURL=style.css.map */
