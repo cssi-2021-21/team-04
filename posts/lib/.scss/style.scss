@@ -1,5 +1,6 @@
 body {
     position: relative;
+    margin: 0rem;
     background: rgb(2,128,144);
     background: linear-gradient(135deg, rgba(2,128,144,1) 0%, rgba(0,168,150,1) 100%);
 }
@@ -14,7 +15,7 @@ body {
     text-align: center;
 }
 
-main {
+.main {
     display: flex;
     flex-wrap: wrap;
     gap: clamp(0.2rem, 1rem, 2rem);
@@ -50,7 +51,7 @@ main {
             }
         }
         & .post{
-            width: clamp(28rem, 90%, 120rem);
+            width: clamp(28rem, 90%, 80rem);
             margin: auto;
             box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
             background-color: white;
@@ -59,7 +60,7 @@ main {
             flex-direction: column;
             transition: all ease-out 0.2s;
             &:hover {
-                transform: translateY(-2.5%);
+                transform: translateY(-1%);
             }
 
             & .poster {
@@ -234,7 +235,7 @@ main {
     height: 100%;
     padding: 1rem;
     transform: translateX(100%);
-    box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.329);
+    box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.705);
     & > hr {
         width: 90%;
         margin: 0;
@@ -333,5 +334,77 @@ main {
                 background-color: #05668D;
             }
         }
+    }
+}
+
+nav{
+    display: flex;
+    margin: 0rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background-color: white;
+    flex-wrap: wrap;
+    box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+    gap: 2rem;
+    
+    & > div {
+        display: flex;
+        padding: 0.25rem;
+        margin: auto;
+        &:first-of-type{
+            gap: 1rem;
+            flex: 1;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: nowrap;
+            & > img{
+                border-radius: 3rem;
+                width: 4rem;
+            }
+            & > h1{
+                font-size: 2.5rem;
+                margin: 0;
+                background: linear-gradient(135deg, rgba(2,128,144,1) 0%, rgba(0,168,150,1) 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+        }
+
+        &:nth-of-type(2){
+            align-items: center;
+            justify-content: center;
+            flex: 2;
+            cursor: pointer;
+            & > button{
+                padding: 1rem clamp(10rem, 12rem, 15rem);
+                font-size: 1.5rem;
+                border: none;
+                border-radius: 0.3rem;
+                transition: all ease-out 0.2s;
+                color: white;
+                background: rgb(2,128,144);
+                background: linear-gradient(135deg, rgba(2,128,144,1) 0%, rgba(0,168,150,1) 100%);
+                &:hover{
+                    transform: translateY(-10%);
+                }
+            }
+        }
+
+        &:last-of-type {
+            flex: 1;
+            display: flex;
+            gap: 2rem;
+            cursor: pointer;
+            & > svg{
+                flex: 1;
+                fill: #00A896;
+                transition: all ease-out 0.2s;
+                &:hover{
+                    fill: #05668D;
+                    transform: translateY(-5%);   
+                }
+            }
+        }
+
     }
 }

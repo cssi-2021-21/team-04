@@ -1,5 +1,6 @@
 body {
   position: relative;
+  margin: 0rem;
   background: #028090;
   background: linear-gradient(135deg, #028090 0%, #00a896 100%);
 }
@@ -14,19 +15,19 @@ body {
   text-align: center;
 }
 
-main {
+.main {
   display: flex;
   flex-wrap: wrap;
   gap: clamp(0.2rem, 1rem, 2rem);
 }
-main .postSection {
+.main .postSection {
   flex: 5;
   padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 3rem;
 }
-main .postSection .user {
+.main .postSection .user {
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
   background-color: white;
   border-radius: 0.25rem;
@@ -35,7 +36,7 @@ main .postSection .user {
   margin: auto;
   transition: all ease-out 0.2s;
 }
-main .postSection .user > button {
+.main .postSection .user > button {
   flex: 1;
   border-radius: 0.25rem;
   font-size: 3rem;
@@ -44,15 +45,15 @@ main .postSection .user > button {
   margin: 0.75rem;
   transition: all ease-out 0.2s;
 }
-main .postSection .user > button:hover {
+.main .postSection .user > button:hover {
   color: white;
   background-color: #05668D;
 }
-main .postSection .user:hover {
+.main .postSection .user:hover {
   background-color: #00A896;
 }
-main .postSection .post {
-  width: clamp(28rem, 90%, 120rem);
+.main .postSection .post {
+  width: clamp(28rem, 90%, 80rem);
   margin: auto;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
   background-color: white;
@@ -61,10 +62,10 @@ main .postSection .post {
   flex-direction: column;
   transition: all ease-out 0.2s;
 }
-main .postSection .post:hover {
-  transform: translateY(-2.5%);
+.main .postSection .post:hover {
+  transform: translateY(-1%);
 }
-main .postSection .post .poster {
+.main .postSection .post .poster {
   padding: clamp(1.5rem, 3rem, 5rem);
   padding-top: 1.5rem;
   padding-bottom: 1rem;
@@ -73,40 +74,40 @@ main .postSection .post .poster {
   align-items: center;
   gap: 2rem;
 }
-main .postSection .post .poster > img {
+.main .postSection .post .poster > img {
   border-radius: 5rem;
   width: clamp(4rem, 6%, 10rem);
 }
-main .postSection .post .poster h1 {
+.main .postSection .post .poster h1 {
   margin: 0;
 }
-main .postSection .post .poster p {
+.main .postSection .post .poster p {
   margin: 0;
   font-size: 1rem;
 }
-main .postSection .post .postTitle {
+.main .postSection .post .postTitle {
   text-align: center;
   margin: 0;
   padding: 1rem;
 }
-main .postSection .post .postTitle > hr {
+.main .postSection .post .postTitle > hr {
   width: 80%;
 }
-main .postSection .post .postImg {
+.main .postSection .post .postImg {
   display: flex;
   justify-content: center;
   padding-bottom: 1.5rem;
 }
-main .postSection .post .postImg > img {
+.main .postSection .post .postImg > img {
   width: clamp(40rem, 70%, 80rem);
 }
-main .postSection .post .postWord {
+.main .postSection .post .postWord {
   padding: clamp(1.5rem, 4rem, 5rem);
   padding-top: 1rem;
   padding-bottom: 1.5rem;
   font-size: 1.2rem;
 }
-main .postSection .post .post_ImgLeft {
+.main .postSection .post .post_ImgLeft {
   display: flex;
   font-size: 1.2rem;
   padding: clamp(1.5rem, 4rem, 5rem);
@@ -115,21 +116,21 @@ main .postSection .post .post_ImgLeft {
   gap: 2rem;
   flex-wrap: wrap;
 }
-main .postSection .post .post_ImgLeft > div:first-of-type {
+.main .postSection .post .post_ImgLeft > div:first-of-type {
   flex: 1;
   text-align: center;
 }
-main .postSection .post .post_ImgLeft > div:first-of-type > img {
+.main .postSection .post .post_ImgLeft > div:first-of-type > img {
   width: clamp(2rem, 15rem, 40rem);
 }
-main .postSection .post .post_ImgLeft > div:last-of-type {
+.main .postSection .post .post_ImgLeft > div:last-of-type {
   flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: left;
 }
-main .postSection .post .post_ImgRight {
+.main .postSection .post .post_ImgRight {
   display: flex;
   font-size: 1.2rem;
   padding: clamp(1.5rem, 4rem, 5rem);
@@ -138,32 +139,32 @@ main .postSection .post .post_ImgRight {
   gap: 2rem;
   flex-wrap: wrap;
 }
-main .postSection .post .post_ImgRight > div:last-of-type {
+.main .postSection .post .post_ImgRight > div:last-of-type {
   flex: 1;
   text-align: center;
 }
-main .postSection .post .post_ImgRight > div:last-of-type > img {
+.main .postSection .post .post_ImgRight > div:last-of-type > img {
   width: clamp(2rem, 15rem, 40rem);
 }
-main .postSection .post .post_ImgRight > div:first-of-type {
+.main .postSection .post .post_ImgRight > div:first-of-type {
   flex: 2;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: left;
 }
-main .contacts {
+.main .contacts {
   flex: 1;
   color: white;
   text-align: left;
   user-select: none;
 }
-main .contacts > hr {
+.main .contacts > hr {
   width: 90%;
   margin: 0;
   padding: 0;
 }
-main .contacts .friends {
+.main .contacts .friends {
   display: flex;
   text-align: left;
   align-items: center;
@@ -172,29 +173,29 @@ main .contacts .friends {
   transition: all ease-out 0.2s;
   padding-top: 1rem;
 }
-main .contacts .friends hr {
+.main .contacts .friends hr {
   border: 0;
   height: 1px;
   background-image: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0));
 }
-main .contacts .friends:hover {
+.main .contacts .friends:hover {
   transform: translateY(-10%);
 }
-main .contacts .friends > img {
+.main .contacts .friends > img {
   border-radius: 5rem;
   width: clamp(3rem, 10%, 10rem);
 }
-main .contacts .friends > div {
+.main .contacts .friends > div {
   display: flex;
   flex-direction: column;
 }
-main .contacts .friends > div > hr {
+.main .contacts .friends > div > hr {
   width: 100%;
 }
-main .contacts .friends > div > p {
+.main .contacts .friends > div > p {
   margin: 0;
 }
-main .contacts .friends > div > h2 {
+.main .contacts .friends > div > h2 {
   margin: 0;
 }
 
@@ -221,7 +222,7 @@ main .contacts .friends > div > h2 {
   height: 100%;
   padding: 1rem;
   transform: translateX(100%);
-  box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.329);
+  box-shadow: -2px 0px 20px rgba(0, 0, 0, 0.705);
 }
 .contactsFixed > hr {
   width: 90%;
@@ -317,6 +318,74 @@ main .contacts .friends > div > h2 {
   transform: translateY(-10%);
   color: white;
   background-color: #05668D;
+}
+
+nav {
+  display: flex;
+  margin: 0rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: white;
+  flex-wrap: wrap;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  gap: 2rem;
+}
+nav > div {
+  display: flex;
+  padding: 0.25rem;
+  margin: auto;
+}
+nav > div:first-of-type {
+  gap: 1rem;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+nav > div:first-of-type > img {
+  border-radius: 3rem;
+  width: 4rem;
+}
+nav > div:first-of-type > h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+nav > div:nth-of-type(2) {
+  align-items: center;
+  justify-content: center;
+  flex: 2;
+  cursor: pointer;
+}
+nav > div:nth-of-type(2) > button {
+  padding: 1rem clamp(10rem, 12rem, 15rem);
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 0.3rem;
+  transition: all ease-out 0.2s;
+  color: white;
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+nav > div:nth-of-type(2) > button:hover {
+  transform: translateY(-10%);
+}
+nav > div:last-of-type {
+  flex: 1;
+  display: flex;
+  gap: 2rem;
+  cursor: pointer;
+}
+nav > div:last-of-type > svg {
+  flex: 1;
+  fill: #00A896;
+  transition: all ease-out 0.2s;
+}
+nav > div:last-of-type > svg:hover {
+  fill: #05668D;
+  transform: translateY(-5%);
 }
 
 /*# sourceMappingURL=style.css.map */
