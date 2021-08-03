@@ -434,7 +434,6 @@ nav{
                 }
             }
         }
-
     }
 }
 
@@ -454,4 +453,9 @@ footer {
         -webkit-text-fill-color: transparent;
         font-weight: 800;
     }
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
 }

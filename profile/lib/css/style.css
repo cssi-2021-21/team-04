@@ -12,14 +12,271 @@ body {
 }
 .charts > div {
   flex: 1;
-  width: clamp(20rem, 70%, 75rem);
+  width: clamp(25rem, 90%, 70rem);
   border-radius: 0.5rem;
   background-color: rgba(255, 255, 255, 0.918);
   margin: auto;
-  box-shadow: 10px 5px 5px #02c399c5;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
 }
-.charts > div:last-of-type {
-  height: 40%;
+
+nav {
+  display: flex;
+  margin: 0rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background-color: white;
+  flex-wrap: wrap;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  gap: 4rem;
+}
+nav > div {
+  display: flex;
+  padding: 0.25rem;
+  margin: auto;
+}
+nav > div:first-of-type {
+  gap: 1rem;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: nowrap;
+}
+nav > div:first-of-type > img {
+  width: 4rem;
+}
+nav > div:first-of-type > h1 {
+  font-size: 2.5rem;
+  margin: 0;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+nav > div:nth-of-type(2) {
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  cursor: pointer;
+}
+nav > div:nth-of-type(2) > button {
+  padding: 1rem clamp(10rem, 12rem, 15rem);
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 0.3rem;
+  transition: all ease-out 0.2s;
+  color: white;
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+nav > div:nth-of-type(2) > button:hover {
+  transform: translateY(-10%);
+}
+nav > div:last-of-type {
+  flex: 1;
+  display: flex;
+  gap: 2rem;
+  cursor: pointer;
+}
+nav > div:last-of-type > svg {
+  flex: 1;
+  fill: #00A896;
+  transition: all ease-out 0.2s;
+}
+nav > div:last-of-type > svg:hover {
+  fill: #05668D;
+  transform: translateY(-5%);
+}
+
+footer {
+  margin: 0rem;
+  padding: 0rem;
+  margin-top: 2rem;
+  background-color: white;
+  text-align: center;
+  box-shadow: 0px -10px 20px rgba(0, 0, 0, 0.582);
+}
+footer > p {
+  font-size: 1.2rem;
+  margin: 0;
+  padding: 0.6rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+.welcomeMsg {
+  background-color: white;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  width: clamp(25rem, 90%, 100rem);
+  margin: auto;
+  text-align: center;
+  padding: 0.25rem;
+  border-radius: 0.2rem;
+  word-spacing: 1rem;
+  letter-spacing: 0.25rem;
+  margin-top: 4rem;
+  user-select: none;
+}
+.welcomeMsg > h1 {
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  font-size: clamp(2rem, 4rem, 4rem);
+}
+
+.profileSec {
+  width: clamp(25rem, 60%, 70rem);
+  margin: auto;
+  background-color: white;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  margin-top: 4rem;
+  border-radius: 0.2rem;
+  padding: 4rem 1rem;
+  gap: 2rem;
+  display: flex;
+  flex-direction: column;
+}
+.profileSec > hr {
+  color: black;
+  width: 60%;
+}
+.profileSec > div {
+  flex: 1;
+  display: flex;
+  gap: 2rem;
+}
+.profileSec > div:first-of-type {
+  width: clamp(25rem, 80%, 70rem);
+  margin: auto;
+}
+.profileSec > div:first-of-type > img {
+  border-radius: 1rem;
+}
+.profileSec > div:first-of-type > div {
+  flex-direction: column;
+  display: flex;
+  justify-content: center;
+}
+.profileSec > div:first-of-type > div > h1 {
+  margin: 0;
+}
+.profileSec > div:first-of-type > div > h2 {
+  margin: 0;
+}
+.profileSec > div:nth-of-type(2) {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+}
+.profileSec > div:nth-of-type(2) > h1 {
+  font-size: 3rem;
+  font-style: italic;
+  letter-spacing: 0.75rem;
+  margin: 0;
+}
+
+.post {
+  width: clamp(28rem, 80%, 80rem);
+  margin: auto;
+  box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.329);
+  background-color: white;
+  border-radius: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  transition: all ease-out 0.2s;
+}
+.post:hover {
+  transform: translateY(-1%);
+}
+.post .poster {
+  padding: clamp(1.5rem, 3rem, 5rem);
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  display: flex;
+  text-align: left;
+  align-items: center;
+  gap: 2rem;
+}
+.post .poster > img {
+  border-radius: 5rem;
+  width: clamp(4rem, 6%, 10rem);
+}
+.post .poster h1 {
+  margin: 0;
+}
+.post .poster p {
+  margin: 0;
+  font-size: 1rem;
+}
+.post .postTitle {
+  text-align: center;
+  margin: 0;
+  padding: 1rem;
+}
+.post .postTitle > hr {
+  width: 80%;
+}
+.post .postImg {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 1.5rem;
+}
+.post .postImg > img {
+  width: clamp(40rem, 70%, 80rem);
+}
+.post .postWord {
+  padding: clamp(1.5rem, 4rem, 5rem);
+  padding-top: 1rem;
+  padding-bottom: 1.5rem;
+  font-size: 1.2rem;
+}
+.post .post_ImgLeft {
+  display: flex;
+  font-size: 1.2rem;
+  padding: clamp(1.5rem, 4rem, 5rem);
+  padding-top: 0;
+  padding-bottom: 1rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.post .post_ImgLeft > div:first-of-type {
+  flex: 1;
+  text-align: center;
+}
+.post .post_ImgLeft > div:first-of-type > img {
+  width: clamp(2rem, 15rem, 40rem);
+}
+.post .post_ImgLeft > div:last-of-type {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
+}
+.post .post_ImgRight {
+  display: flex;
+  font-size: 1.2rem;
+  padding: clamp(1.5rem, 4rem, 5rem);
+  padding-top: 0;
+  padding-bottom: 1rem;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.post .post_ImgRight > div:last-of-type {
+  flex: 1;
+  text-align: center;
+}
+.post .post_ImgRight > div:last-of-type > img {
+  width: clamp(2rem, 15rem, 40rem);
+}
+.post .post_ImgRight > div:first-of-type {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: left;
 }
 
 .workoutCard {
