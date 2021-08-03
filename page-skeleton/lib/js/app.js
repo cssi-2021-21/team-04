@@ -394,13 +394,13 @@ const APP = new class {
     /**
      * Creates a new post using the current user's credentials.
      * @param {string} message the message to send with the post
-     * @param {boolean} [public = true] whether or not to make the post public
+     * @param {boolean} [isPublic = true] whether or not to make the post public
      * @param {string} [gif] the url of the GIF to send with the post
      * @param {(id: string) => any} [onSuccess] the callback to run when operation is successful (id = id of post)
      * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
      * @returns {void} Nothing 
      */
-    createPost(message, public = true, onSuccess, onFail) {
+    createPost(message, isPublic = true, gif, onSuccess, onFail) {
         if (!this.isLoggedIn) {
             if (onFail)
                 onFail(new Error("Cannot create post because the current user is not logged in."));
@@ -427,7 +427,7 @@ const APP = new class {
 
         root.chld(id).set({
             author: this.user.uid,
-            public,
+            public: isPublic,
             gif: parsedGif,
             message: parsedMessage,
             meta: {
