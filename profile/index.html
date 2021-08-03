@@ -23,35 +23,43 @@
 </head>
 
 <body>
-    <h1>Hello World</h1>
-    <center>
-        <form action="">
-            <select id="exercise" name="exercise">
-                <option value="" disabled selected>Select an exercise</option>
-            </select>
-            <input type="number" name="duration" id="duration">
-            <button id="submitExercise">Submit Workout</button>
-        </form>
-    </center>
-    
-    <div class="charts">
-        <div id="barChartDiv">
-            <canvas id="myChart">
-                <p> Error in loading </p>
-            </canvas>
-        </div>
-        <div id="pieChartDiv">
-            <canvas id="myChart2">
-                <p> Error in loading </p>
-            </canvas>
+    <h1>Profile</h1>
+    <div class="section">
+        <h2>Workouts</h2>
+        <!-- new workouts go here -->
+        <div id="profileContainer"></div>
+    </div>
+    <div class="section">
+        <h2>Add New Workout</h2>
+        <center>
+            <form action="">
+                <select id="exercise" name="exercise">
+                    <option value="" disabled selected>Select an exercise</option>
+                </select>
+                <input type="number" name="duration" id="duration">
+                <button id="submitExercise">Submit Workout</button>
+            </form>
+        </center>
+    </div>
+    <div class="section">
+        <h2>Your Progress Over the Last Week</h2>
+        <div class="charts">
+            <div id="barChartDiv">
+                <canvas id="myChart">
+                    <p> Error in loading </p>
+                </canvas>
+            </div>
+            <div id="pieChartDiv">
+                <canvas id="myChart2">
+                    <p> Error in loading </p>
+                </canvas>
+            </div>
         </div>
     </div>
     <!-- exercise selector with options and a textbox for duration -->
     
     
-    <div id="profileContainer">
-        
-    </div>
+    
 </body>
 
 </html>
