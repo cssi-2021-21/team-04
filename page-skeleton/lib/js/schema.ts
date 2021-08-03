@@ -40,7 +40,7 @@ interface App {
             message: string
             gif?: string // url of gif
             comments?: {
-                [$commentId: string]: true // the key is the comment's id
+                [$commentId: string]: number // the key is the comment's id; the value is when the comment was made
             }
             likes?: {
                 [$uid: string]: true // the key is the liker's user id
