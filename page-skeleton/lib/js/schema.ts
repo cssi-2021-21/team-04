@@ -22,6 +22,13 @@ interface App {
             }
         }
     }
+    "public-users"?: {
+        [$uid: string]: {
+            name: string
+            color: string // hexColor
+            url?: string // url
+        }
+    }
     posts?: {
         [$postId: string]: {
             author: string // $uid
