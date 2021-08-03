@@ -49,12 +49,15 @@ const APP = new class {
             REF.on('value', snap => {
                 const val = snap.val();
                 if (!val)
-                    // TODO
                     REF.set({
-                        email: user.email,
-                        key: 2,
-                        key1: "yay",
-                        key2: false
+                        name: user.displayName ?? user.email.split('@')[0],
+                        image: {
+                            color: '#'+Math.random().toString(16).substr(2,6),
+                            url: user.photoURL
+                        },
+                        meta: {
+                            created: new Date().getTime()
+                        }
                     });
 
                 if (this._booleans.latchedOntoUser)
