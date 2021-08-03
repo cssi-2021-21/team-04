@@ -50,6 +50,7 @@ interface App {
     comments?: {
         [$commentId: string]: {
             author: string // $uid
+            target: string // $postId
             meta: {
                 created: number // new Date().getTime()
                 updated: number // same as created but can change

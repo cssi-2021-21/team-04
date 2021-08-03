@@ -12,12 +12,19 @@ firebase.initializeApp({
 const [ DB, AUTH ] = "database:auth".split(':').map(e => firebase[e]());
 
 // # APP
+const REGEXES = Object.freeze({
+    hexColor: /^#(?:[0-9a-f]{3}){1,2}$/i,
+    url: /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i
+});
 const DEFAULT_TARGETS = Object.freeze({
     /** listen to this target for updates to the user object */
     user: "user",
 
     /** listen to this target for updates to the user data on the database */
-    userData: "user-data"
+    userData: "user-data",
+
+    /** listen to this target for updates to all users' names, colors, and photoUrls */
+    publicUsers: "public-users"
 });
 const APP = new class {
 
@@ -29,6 +36,9 @@ const APP = new class {
         // <target>: <listener>[]
     }
     _values = {
+        users: {
+            // <key = uid> = <value = { name, color, url }>
+        }
         // <key>: <value>
     }
 
@@ -36,6 +46,22 @@ const APP = new class {
         this.registerListenerTarget(
             DEFAULT_TARGETS.user, 
             callListeners => AUTH.onAuthStateChanged(user => callListeners(user))
+        );
+        this.registerListenerTarget(
+            DEFAULT_TARGETS.publicUsers, 
+            callListeners => DB.ref("public-users").on('value', snap => {
+                const val = snap.val();
+                if (!val)
+                    return;
+
+                for (const [uid, user] of Object.entries(val)) {
+                    this._values.users[uid].name = user.name;
+                    this._values.users[uid].color = user.color;
+                    this._values.users[uid].url = user.url || null;
+                }
+
+                callListeners(this._values.users);
+            })
         );
         this.registerListener(DEFAULT_TARGETS.user, (_, user) => {
             if (!user)
@@ -46,19 +72,31 @@ const APP = new class {
                 return;
 
             const REF = DB.ref(`/users/${user.uid}`);
-            REF.on('value', snap => {
+            DB.ref(`/users/${user.uid}`).on('value', snap => {
                 const val = snap.val();
-                if (!val)
-                    REF.set({
-                        name: user.displayName ?? user.email.split('@')[0],
-                        image: {
-                            color: '#'+Math.random().toString(16).substr(2,6),
-                            url: user.photoURL
+                if (!val) {
+                    const name = user.displayName ?? user.email.split('@')[0],
+                        color = '#'+Math.random().toString(16).substr(2,6),
+                        url = user.photoURL;
+                    
+                    REF.ref('').update({
+                        [`/users/${user.uid}`]: {
+                            name,
+                            image: {
+                                color,
+                                url
+                            },
+                            meta: {
+                                created: new Date().getTime()
+                            }
                         },
-                        meta: {
-                            created: new Date().getTime()
+                        [`/public-users/${user.uid}`]: {
+                            name,
+                            color,
+                            url
                         }
                     });
+                }
 
                 if (this._booleans.latchedOntoUser)
                     return;
@@ -113,7 +151,7 @@ const APP = new class {
      * Registers a new listener to a specific target
      * @param {string} target the id of the listener-target
      * @param {(listenerId: string, ...params: any[]) => any} callback the function to call when the listener gets a new value
-     * @param {boolean} callImmediately whether or not to run the callback immediately with the latest value
+     * @param {boolean} [callImmediately = true] whether or not to run the callback immediately with the latest value
      * @returns {void} Nothing
      */
     registerListener(target, callback, callImmediately = true) {
@@ -146,6 +184,467 @@ const APP = new class {
             !this._listeners[target][+index]
         ) return;
         this._listeners[target][+index].dead = true;
+    }
+
+    /**
+     * Looks up a user's information base on user id
+     * @param {string} uid the id of the person to lookup
+     * @param {(data: {
+     *  name: string,
+     *  color: string,
+     *  url: string | null
+     * } | null) => any} [callbackOnUpdate] a callback to run whenever a potential user info update happens
+     * @returns {{
+     *  name: string,
+     *  color: string,
+     *  url: string | null
+     * } | null} the user's personal information
+     */
+    lookupUser(uid, callbackOnUpdate) {
+        const getUser = () => this._values.users[uid] || null;
+        if (callbackOnUpdate)
+            this.registerListener(DEFAULT_TARGETS.publicUsers,
+                () => callbackOnUpdate(getUser()),
+                false
+            );
+        return getUser();
+    }
+
+    /**
+     * Adds a friend to the current user's account
+     * @param {string} uid the user id of the person you want to befriend
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @param {void} Nothing
+     */
+    addFriend(uid, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot add friend because the current user is not logged in."));
+            return;
+        }
+
+        DB.ref(`/users/${this.user.uid}/friends`).update({
+            [uid]: true
+        }, err => {
+            if (err) {
+                if (onFail)
+                    onFail(new Error(err.message));
+                return;
+            }
+            if (onSuccess)
+                onSuccess();
+        });
+    }
+
+    /**
+     * Removes a friend from the current user's account
+     * @param {string} uid the user id of the person you want to unfriend
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @returns {void} Nothing
+     */
+    removeFriend(uid, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot remove friend because the current user is not logged in."));
+            return;
+        }
+
+        DB.ref(`/users/${this.user.uid}/friends`).update({
+            [uid]: null
+        }, err => {
+            if (err) {
+                if (onFail)
+                    onFail(new Error(err.message));
+                return;
+            }
+            if (onSuccess)
+                onSuccess();
+        });
+    }
+
+    /**
+     * Log a workout to the user's account
+     * @param {string} name the name of the workout
+     * @param {number} duration the duration of the workout in minutes
+     * @param {number} calories the total amount of calories burnt
+     * @param {(id: string) => any} [onSuccess] the callback to run when operation is successful (id = id of workout)
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @returns {void} Nothing
+     */
+    logWorkout(name, duration, calories, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot log workout because the current user is not logged in."));
+            return;
+        }
+
+        const root = DB.ref(`/users/${this.user.uid}/workout`);
+        const id = root.push().key;
+
+        root.child(id).set({
+            name: name.trim(),
+            duration,
+            calories,
+            timestamp: new Date().getTime()
+        }, err => {
+            if (err) {
+                if (onFail)
+                    onFail(new Error(err.message));
+                return;
+            }
+            if (onSuccess)
+                onSuccess(id);
+        });
+    }
+
+    /**
+     * Deletes a workout from the user's account by id
+     * @param {string} workoutId the id of the workout to delete
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @returns {void} Nothing
+     */
+    deleteWorkout(workoutId, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot delete workout because the current user is not logged in."));
+            return;
+        }
+        
+        DB.ref(`/users/${this.user.uid}/workout`).update({
+            [workoutId]: null
+        }, err => {
+            if (err) {
+                if (onFail)
+                    onFail(new Error(err.message));
+                return;
+            }
+            if (onSuccess)
+                onSuccess();
+        });
+    }
+
+    /**
+     * Updates the current user information.
+     * @param {{
+     *  name?: string,
+     *  color?: string,
+     *  url?: string
+     * }} data the new data to update the current user with [name = the name of the user] [color = the hex color string] [url = the url of the image]
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @returns {void} Nothing
+     */
+    updateUserInfo(data, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot change user info because the current user is not logged in."));
+            return;
+        }
+
+        const payload = {},
+            uid = this.user.uid;
+
+        if (data.name) {
+            const name = `${data.name}`.trim();
+            if (!name) {
+                if (onFail)
+                    onFail(new Error("The user's new name is invalid."));
+                return;
+            }
+
+            payload[`/users/${uid}/name`] = name;
+            payload[`/public-users/${uid}/name`] = name;
+        }
+        if (data.color) {
+            const color = `${data.color}`.trim();
+            if (!REGEXES.hexColor.test(color)) {
+                if (onFail)
+                    onFail(new Error("The user's new color is invalid."));
+                return;
+            }
+
+            payload[`/users/${uid}/image/color`] = color;
+            payload[`/public-users/${uid}/color`] = color;
+        }
+        if (data.url) {
+            const url = `${data.url}`.trim();
+            if (!REGEXES.url.test(url)) {
+                if (onFail)
+                    onFail(new Error("The user's new image URL is invalid."));
+                return;
+            }
+            
+            payload[`/users/${uid}/image/url`] = url;
+            payload[`/public-users/${uid}/url`] = url;
+        }
+        
+        DB.ref('').update(payload, err => {
+            if (err) {
+                if (onFail)
+                    onFail(new Error(err.message));
+                return;
+            }
+            if (onSuccess)
+                onSuccess();
+        });
+    }
+
+    /**
+     * Creates a new post using the current user's credentials.
+     * @param {string} message the message to send with the post
+     * @param {boolean} [public = true] whether or not to make the post public
+     * @param {string} [gif] the url of the GIF to send with the post
+     * @param {(id: string) => any} [onSuccess] the callback to run when operation is successful (id = id of post)
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @returns {void} Nothing 
+     */
+    createPost(message, public = true, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot create post because the current user is not logged in."));
+            return;
+        }
+
+        const parsedMessage = `${message}`.trim();
+        if (!parsedMessage) {
+            if (onFail)
+                onFail(new Error("Message cannot be an empty string."));
+            return;
+        }
+
+        const parsedGif = gif === null || gif === undefined ? gif : `${gif}`.trim();
+        if (typeof parsedGif == "string" && !REGEXES.url.test(parsedGif)) {
+            if (onFail)
+                onFail(new Error("GIF url is invalid."));
+            return;
+        }
+
+        const root = DB.ref(`/posts`);
+        const id = root.push().key;
+        const stamp = new Date().getTime();
+
+        root.chld(id).set({
+            author: this.user.uid,
+            public,
+            gif: parsedGif,
+            message: parsedMessage,
+            meta: {
+                created: stamp,
+                updated: stamp
+            }
+        }, err => {
+            if (err) {
+                if (onFail)
+                    onFail(new Error(err.message));
+                return;
+            }
+            if (onSuccess)
+                onSuccess(id);
+        });
+    }
+
+    /**
+     * Edits a current post using the current user's credentials.
+     * @param {string} postId the id of the post to edit
+     * @param {{
+     *  message?: string,
+     *  gif?: string
+     * } | null} data the new data of the post (Setting this to null will delete the post.)
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @returns {void} Nothing
+     */
+    editPost(postId, data, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot edit post because the current user is not logged in."));
+            return;
+        }
+        
+        const REF = DB.ref(`/posts/${postId}`);
+        REF.once('value')
+            .then(snap => snap.val())
+            .then(val => {
+                if (!val) {
+                    if (onFail)
+                        onFail(new Error("Post does not exist."));
+                    return;
+                }
+
+                if (val.author !== this.user.uid) {
+                    if (onFail)
+                        onFail(new Error("Cannot edit post because the post was not written by the current user."));
+                    return;
+                }
+
+                if (!data)
+                    REF.set(null, err => {
+                        if (err) {
+                            if (onFail)
+                                onFail(new Error("Failed to delete the post: " + err.message));
+                            return;
+                        }
+                        if (onSuccess)
+                            onSuccess();
+                    });
+                else {
+                    const payload = {
+                        "meta/updated": new Date().getTime()
+                    }
+                    if (data.message) {
+                        const message = `${data.message}`.trim();
+                        if (!message) {
+                            if (onFail)
+                                onFail(new Error("Post message cannot be an empty string."));
+                            return;
+                        }
+
+                        payload["message"] = message;
+                    }
+                    if (data.gif) {
+                        const gif = data.gif === null || data.gif === undefined ? data.gif : `${data.gif}`.trim();
+                        if (typeof gif == "string" && !REGEXES.url.test(gif)) {
+                            if (onFail)
+                                onFail(new Error("Post GIF url is invalid."));
+                            return;
+                        }
+
+                        payload["gif"] = gif;
+                    }
+                    REF.update(payload, err => {
+                        if (err) {
+                            if (onFail)
+                                onFail(new Error("Failed to update the post: " + err.message));
+                            return;
+                        }
+                        if (onSuccess)
+                            onSuccess();
+                    });
+                }
+            })
+            .catch(err => {
+                if (err && onFail)
+                    onFail(new Error(err.message));
+            });
+    }
+
+    /**
+     * Creates a comment on a post provied by id
+     * @param {string} postId the id of the post to comment on
+     * @param {string} message the message to send with the comment
+     * @param {(id: string) => any} [onSuccess] the callback to run when operation is successful (id = id of comment)
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     */
+    createComment(postId, message, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot create comment to post because the current user is not logged in."));
+            return;
+        }
+        
+        DB.ref(`/posts/${postId}`).once('value')
+            .then(snap => snap.val())
+            .then(val => {
+                if (!val) {
+                    if (onFail)
+                        onFail(new Error("Post does not exist."));
+                    return;
+                }
+
+                const parsedMessage = `${message}`.trim();
+                if (!parsedMessage) {
+                    if (onFail)
+                        onFail(new Error("Message cannot be an empty string."));
+                    return;
+                }
+
+                const id = DB.ref(`/comments`).push().key;
+                const stamp = new Date().getTime();
+
+                DB.ref('').update({
+                    [`/posts/${postId}/comments/${id}`]: true,
+                    [`/comments/${id}`]: {
+                        author: this.user.uid,
+                        message: parsedMessage,
+                        target: postId,
+                        meta: {
+                            created: stamp,
+                            updated: stamp
+                        }
+                    }
+                }, err => {
+                    if (err) {
+                        if (onFail)
+                            onFail(new Error("Failed to create comment on the post: " + err.message));
+                        return;
+                    }
+                    if (onSuccess)
+                        onSuccess(id);
+                });
+            })
+            .catch(err => {
+                if (err && onFail)
+                    onFail(new Error(err.message));
+            });
+    }
+
+    /**
+     * Edts a comment provided by id
+     * @param {string} commentId the id of the comment to edit 
+     * @param {string} message the new message for the comment
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     */
+    editComment(commentId, message, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot edit comment to post because the current user is not logged in."));
+            return;
+        }
+
+        const ref = DB.ref(`/comments/${commentId}`);
+        ref.once('value')
+            .then(snap => snap.val())
+            .then(val => {
+                if (!val) {
+                    if (onFail)
+                        onFail(new Error("Comment does not exist."));
+                    return;
+                }
+
+                if (val.author !== this.user.uid) {
+                    if (onFail)
+                        onFail(new Error("Cannot edit comment because the comment was not written by the current user."));
+                    return;
+                }
+
+                const parsedMessage = `${message}`.trim();
+                if (!parsedMessage) {
+                    if (onFail)
+                        onFail(new Error("Message cannot be an empty string."));
+                    return;
+                }
+
+                ref.update({
+                    message: parsedMessage,
+                    "meta/updated": new Date().getTime()
+                }, err => {
+                    if (err) {
+                        if (onFail)
+                            onFail(new Error("Failed to edit comment: " + err.message));
+                        return;
+                    }
+                    if (onSuccess)
+                        onSuccess(id);
+                });
+            })
+            .catch(err => {
+                if (err && onFail)
+                    onFail(new Error(err.message));
+            });
     }
 
 }()
