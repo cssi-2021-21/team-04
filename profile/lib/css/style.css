@@ -355,6 +355,99 @@ footer > p {
   text-align: left;
 }
 
+.workout {
+  width: clamp(25rem, 90%, 100rem);
+  margin: auto;
+  background-color: white;
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  margin-top: 4rem;
+  border-radius: 0.2rem;
+  padding: 4rem 0rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.workout > h2 {
+  font-size: 3rem;
+}
+.workout > hr {
+  color: black;
+  width: 80%;
+}
+.workout > div:first-of-type {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.workout > div:first-of-type > h1 {
+  font-size: 1.75rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.workout > div:first-of-type .noPlan {
+  font-size: 2.25rem;
+  margin: 0;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.workout > div:last-of-type {
+  margin-top: 4rem;
+}
+.workout > div:last-of-type > button {
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  color: white;
+  transition: all ease-out 0.2s;
+  border: none;
+  border-radius: 0.2rem;
+  padding: 2rem 4rem;
+  font-size: 2rem;
+}
+.workout > div:last-of-type > button:hover {
+  transform: translateY(-10%);
+}
+
+.havePlan {
+  width: clamp(25rem, 90%, 100rem);
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2rem;
+  padding-bottom: 4rem;
+}
+.havePlan .workout-card {
+  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  padding: 3rem;
+  border-radius: 0.4rem;
+  transition: all ease-out 0.2s;
+}
+.havePlan .workout-card > div {
+  margin-top: 1rem;
+}
+.havePlan .workout-card > div > button {
+  border: none;
+  border-radius: 0.2rem;
+  padding: 1rem 2rem;
+  font-size: 1.4rem;
+  color: white;
+  transition: all ease-out 0.2s;
+}
+.havePlan .workout-card > div > button:first-of-type {
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+.havePlan .workout-card > div > button:last-of-type {
+  background-color: #ff5b5b;
+}
+.havePlan .workout-card > div > button:hover {
+  transform: translateY(-10%);
+}
+.havePlan .workout-card:hover {
+  box-shadow: 10px 10px 20px #05668da1;
+}
+
 .modal {
   z-index: 2;
   background-color: rgba(0, 0, 0, 0.685);

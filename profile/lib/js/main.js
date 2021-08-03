@@ -158,3 +158,9 @@ confirmDelete.addEventListener('click', e => {
 })
 
 //#endregion
+
+
+//#region Workout Card|| Ideally we refresh it per day
+const workoutNoPlan = document.querySelector("#noPlan")
+workoutNoPlan.style.display = "none"
+//#endregion
