@@ -36,6 +36,15 @@ ctx.style.display = "none"
 
 
 //Contacts Btn Move fixed Contacts
+    /*
+        Disable Scrolling bar
+        document.documentElement.style.overflow = "hidden";
+        document.body.scroll = "no"
+
+        Enable Scrolling bar
+        document.documentElement.style.overflow = "auto";
+        document.body.scroll = "yes"
+    */
 const btn = document.querySelector("#contactsBtn");
 btn.style.display = "none"
 btn.addEventListener('click', function() {
@@ -45,19 +54,36 @@ btn.addEventListener('click', function() {
         ctx.style.transform = "translateX(100%)"
         btn.style.transform = "translateX(0%) rotate(0deg)"
         btn.style.transition = "all ease-out 0.2s"
+        document.documentElement.style.overflow = "auto";
+        document.body.scroll = "yes"
     } else {
         let ctx = document.querySelector("#contactsFixed");
         ctx.style.transition = "all ease-out 0.2s"
         ctx.style.transform = "translateX(0%)"
-        btn.style.transform = "translateX(-600%) rotate(180deg)"
+        btn.style.transform = "translateX(-520%) rotate(180deg)"
         btn.style.transition = "all ease-out 0.2s"
+        document.documentElement.style.overflow = "hidden";
+        document.body.scroll = "no"
     }
     fixedClicked = !fixedClicked 
 })
 
 //#endregion
 
+//#region Modal
+//Hide Modal and Every Component within
+// const modal = document.querySelector("#modal")
+// modal.style.display = "none"
+// const phoneAlert = document.querySelector("#phoneAlert")
+// phoneAlert.style.display = "none"
 
+const closeAlertBtn = document.querySelector("#closeAlert");
+closeAlertBtn.addEventListener('click', () => {
+    const modal = document.querySelector("#modal")
+    modal.style.display = "none"
+})
+
+//#endregion
 
 //#region Check if it's phone
 
@@ -65,6 +91,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     // true for mobile device
     const ctx = document.getElementById('contacts');
     ctx.style.display = "none"
+
+    // Make modal Appear to warn people
+    const modal = document.querySelector("#modal")
+    modal.style.display = "grid"
+    const phoneAlert = document.querySelector("#phoneAlert")
+    phoneAlert.style.display = "block"
+
 }
 
 //#endregion
