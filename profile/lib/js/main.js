@@ -104,9 +104,13 @@ window.onresize = () => {
     if (window.innerWidth <= 1100){
         const ctx = document.getElementById('barChartDiv');
         ctx.style.display = "none"
+        const navBuffer = document.querySelector('#navBuffer');
+        navBuffer.style.display = "none"
     } else {
         const ctx = document.getElementById('barChartDiv');
         ctx.style.display = "block"
+        const navBuffer = document.querySelector('#navBuffer');
+        navBuffer.style.display = "block"
     }
 }
 
