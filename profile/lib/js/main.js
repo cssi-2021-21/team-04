@@ -99,6 +99,7 @@ var myChart = new Chart(ctx, {
     }
 });
 
+
 //Remove Bar Graph onresize || When it's less than 1100 
 window.onresize = () => {
     if (window.innerWidth <= 1100){
@@ -113,5 +114,47 @@ window.onresize = () => {
         navBuffer.style.display = "block"
     }
 }
+
+//#region Modal stuff
+const modal = document.querySelector("#modal")
+modal.style.display = "none"
+const phoneAlert = document.querySelector("#phoneAlert")
+phoneAlert.style.display = "none"
+const deleteAccModal = document.querySelector("#deleteAccModal")
+deleteAccModal.style.display = "none"
+
+
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+    // Make modal Appear to warn people
+    const modal = document.querySelector("#modal")
+    modal.style.display = "grid"
+    const phoneAlert = document.querySelector("#phoneAlert")
+    phoneAlert.style.display = "block"
+    document.documentElement.style.overflow = "hidden";
+    document.body.scroll = "no"
+}
+
+const closePhoneAlertBtn = document.querySelector("#closeAlertBtn")
+closePhoneAlertBtn.addEventListener('click', () => {
+    const modal = document.querySelector("#modal")
+    modal.style.display = "none"
+})
+
+//For Account deletion
+const deleteAccBtn = document.querySelector("#deleteAcc");
+deleteAccBtn.addEventListener('click', () => {
+    const modal = document.querySelector("#modal")
+    modal.style.display = "grid"
+    const deleteAccModal = document.querySelector("#deleteAccModal")
+    deleteAccModal.style.display = "block"
+})
+
+const confirmDelete = document.querySelector("#confirmDelete");
+confirmDelete.addEventListener('click', e => {
+    const modal = document.querySelector("#modal")
+    modal.style.display = "none"
+    const deleteAccModal = document.querySelector("#deleteAccModal")
+    deleteAccModal.style.display = "none"
+})
 
 //#endregion

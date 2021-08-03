@@ -126,13 +126,13 @@ footer > p {
 }
 
 .profileSec {
-  width: clamp(25rem, 60%, 70rem);
+  width: clamp(25rem, 90%, 100rem);
   margin: auto;
   background-color: white;
   box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
   margin-top: 4rem;
   border-radius: 0.2rem;
-  padding: 4rem 1rem;
+  padding: 4rem 0rem;
   gap: 2rem;
   display: flex;
   flex-direction: column;
@@ -145,15 +145,16 @@ footer > p {
   flex: 1;
   display: flex;
   gap: 2rem;
+  flex-wrap: wrap;
 }
 .profileSec > div:first-of-type {
-  width: clamp(25rem, 80%, 70rem);
+  width: clamp(10rem, 90%, 80rem);
+  flex-wrap: wrap;
   margin: auto;
-}
-.profileSec > div:first-of-type > img {
-  border-radius: 1rem;
+  gap: 1rem;
 }
 .profileSec > div:first-of-type > div {
+  flex: 1;
   flex-direction: column;
   display: flex;
   justify-content: center;
@@ -164,6 +165,29 @@ footer > p {
 .profileSec > div:first-of-type > div > h2 {
   margin: 0;
 }
+.profileSec > div:first-of-type > div > img {
+  border-radius: 1rem;
+  width: clamp(10rem, 40%, 20rem);
+  flex: 1;
+}
+.profileSec > div:first-of-type > div:nth-of-type(2) {
+  flex: 3;
+  justify-content: center;
+}
+.profileSec > div:first-of-type > div > button {
+  padding: 1rem 4rem;
+  margin: 0rem;
+  border: none;
+  border-radius: 0.2rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  color: white;
+  font-size: 1.25rem;
+  transition: all ease-out 0.3s;
+}
+.profileSec > div:first-of-type > div > button:hover {
+  transform: translateY(-5%);
+  background: #ff5b5b;
+}
 .profileSec > div:nth-of-type(2) {
   display: flex;
   flex-direction: column;
@@ -172,13 +196,65 @@ footer > p {
 }
 .profileSec > div:nth-of-type(2) > h1 {
   font-size: 3rem;
-  font-style: italic;
   letter-spacing: 0.75rem;
+  margin: 0;
+}
+.profileSec > div:nth-of-type(3) {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.profileSec > div:nth-of-type(3) > h1 {
+  font-size: 3rem;
+  letter-spacing: 0.75rem;
+  margin: 0;
+}
+.profileSec > div:nth-of-type(3) > div {
+  width: clamp(25rem, 90%, 90rem);
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+.profileSec > div:nth-of-type(3) > div > div {
+  width: clamp(10rem, 100%, 50rem);
+  flex-wrap: wrap;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  font-size: 1rem;
+  transition: all ease-out 0.2s;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.329);
+  border-radius: 0.5rem;
+  padding: 1rem;
+}
+.profileSec > div:nth-of-type(3) > div > div:hover {
+  transform: translateY(-10%);
+}
+.profileSec > div:nth-of-type(3) > div > div > img {
+  border-radius: 5rem;
+  width: clamp(5rem, 15%, 10rem);
+}
+.profileSec > div:nth-of-type(3) > div > div > div {
+  display: flex;
+  flex-direction: column;
+}
+.profileSec > div:nth-of-type(3) > div > div > div > hr {
+  width: 100%;
+}
+.profileSec > div:nth-of-type(3) > div > div > div > p {
+  margin: 0;
+}
+.profileSec > div:nth-of-type(3) > div > div > div > h2 {
   margin: 0;
 }
 
 .post {
-  width: clamp(28rem, 80%, 80rem);
+  width: clamp(10rem, 80%, 80rem);
   margin: auto;
   box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.329);
   background-color: white;
@@ -277,6 +353,67 @@ footer > p {
   align-items: center;
   justify-content: center;
   text-align: left;
+}
+
+.modal {
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.685);
+  position: fixed;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+.modal > div {
+  width: clamp(28rem, 50%, 100rem);
+  background-color: white;
+  padding: 1rem;
+  border-radius: 0.2rem;
+}
+.modal .phoneAlert > div {
+  width: 80%;
+  border: solid 1px rgba(0, 0, 0, 0.212);
+  margin: auto;
+}
+.modal .phoneAlert > p {
+  margin: 2rem 4rem;
+}
+.modal .phoneAlert > button {
+  margin-top: 2rem;
+  border: none;
+  padding: 1rem 4rem;
+  border-radius: 0.2rem;
+  font-size: 2rem;
+  transition: all ease-out 0.2s;
+}
+.modal .phoneAlert > button:hover {
+  transform: translateY(-10%);
+  color: white;
+  background-color: #05668D;
+}
+.modal .deleteAccModal > div {
+  width: 80%;
+  border: solid 1px rgba(0, 0, 0, 0.212);
+  margin: auto;
+}
+.modal .deleteAccModal > p {
+  margin: 2rem 4rem;
+}
+.modal .deleteAccModal > button {
+  margin-top: 2rem;
+  border: none;
+  padding: 1rem 4rem;
+  border-radius: 0.2rem;
+  font-size: 2rem;
+  transition: all ease-out 0.2s;
+}
+.modal .deleteAccModal > button:hover {
+  transform: translateY(-10%);
+  color: white;
+  background: #ff5b5b;
 }
 
 .workoutCard {
