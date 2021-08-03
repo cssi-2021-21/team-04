@@ -22,6 +22,13 @@ interface App {
             }
         }
     }
+    "public-users"?: {
+        [$uid: string]: {
+            name: string
+            color: string // hexColor
+            url?: string // url
+        }
+    }
     posts?: {
         [$postId: string]: {
             author: string // $uid
@@ -34,6 +41,9 @@ interface App {
             gif?: string // url of gif
             comments?: {
                 [$commentId: string]: true // the key is the comment's id
+            }
+            likes?: {
+                [$uid: string]: true // the key is the liker's user id
             }
         }
     }

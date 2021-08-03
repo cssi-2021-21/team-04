@@ -30,10 +30,23 @@
                     iure quos consequuntur sit unde quia perspiciatis dolores eveniet? Ex aliquam, nemo mollitia aut facilis nihil.
                 </p>
                 <div></div>
-                <button id="closeAlert"> Okay </button>
+                <button class="closeAlert"> Okay </button>
             </div>
             <div class="postCreation">
-
+                <!-- text post -->
+                <textarea id="postText" placeholder="Enter your post text"></textarea>
+                <!-- gif search -->
+                <button>Add a gif to your post?</button>
+                <div id="gify" style="display:none">
+                    <input type="text" name="" id="gifySearch" placeholder="What would you like to search for?">
+                    <div id="gifySelectionContainer"></div>
+                </div>
+                <!-- submit button -->
+                <!-- checkbox for public/private -->
+                <p>Would you like your post to be private? <input type="checkbox" name="" id="pubpri"></p>
+                <br>
+                <button class="closeAlert"> Submit </button>
+                <button class="closeAlert"> Cancel </button>
             </div>
         </div>
     </section>
