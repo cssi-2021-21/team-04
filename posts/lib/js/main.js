@@ -54,16 +54,18 @@ btn.addEventListener('click', function() {
         ctx.style.transform = "translateX(100%)"
         btn.style.transform = "translateX(0%) rotate(0deg)"
         btn.style.transition = "all ease-out 0.2s"
-        document.documentElement.style.overflow = "auto";
-        document.body.scroll = "yes"
+
+        // document.documentElement.style.overflow = "auto";
+        // document.body.scroll = "yes"
     } else {
         let ctx = document.querySelector("#contactsFixed");
         ctx.style.transition = "all ease-out 0.2s"
         ctx.style.transform = "translateX(0%)"
         btn.style.transform = "translateX(-520%) rotate(180deg)"
         btn.style.transition = "all ease-out 0.2s"
-        document.documentElement.style.overflow = "hidden";
-        document.body.scroll = "no"
+        
+        // document.documentElement.style.overflow = "hidden";
+        // document.body.scroll = "no"
     }
     fixedClicked = !fixedClicked 
 })
@@ -72,10 +74,10 @@ btn.addEventListener('click', function() {
 
 //#region Modal
 //Hide Modal and Every Component within
-// const modal = document.querySelector("#modal")
-// modal.style.display = "none"
-// const phoneAlert = document.querySelector("#phoneAlert")
-// phoneAlert.style.display = "none"
+const modal = document.querySelector("#modal")
+modal.style.display = "none"
+const phoneAlert = document.querySelector("#phoneAlert")
+phoneAlert.style.display = "none"
 
 const closeAlertBtn = document.querySelector("#closeAlert");
 closeAlertBtn.addEventListener('click', () => {
