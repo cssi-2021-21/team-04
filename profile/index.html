@@ -24,6 +24,16 @@
 
 <body>
     <h1>Hello World</h1>
+    <center>
+        <form action="">
+            <select id="exercise" name="exercise">
+                <option value="" disabled selected>Select an exercise</option>
+            </select>
+            <input type="number" name="duration" id="duration">
+            <button id="submitExercise">Submit Workout</button>
+        </form>
+    </center>
+    
     <div class="charts">
         <div id="barChartDiv">
             <canvas id="myChart">
@@ -35,14 +45,12 @@
                 <p> Error in loading </p>
             </canvas>
         </div>
+    </div>
     <!-- exercise selector with options and a textbox for duration -->
-    <select id="exercise" name="exercise">
-        <option value="" disabled selected>Select an exercise</option>
-    </select>
-    <input type="number" name="duration" id="duration">
-    <button id="submitExercise">Submit Workout</button>
+    
+    
     <div id="profileContainer">
-
+        
     </div>
 </body>
 

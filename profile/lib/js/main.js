@@ -10,34 +10,24 @@ firebase.initializeApp({
     appId: "1:572149620254:web:e4f78ac7128d8d713cd80f"
 });
 
-const activities = [
-    "run",
-    "treadmill",
-    "hiking",
-    "weight",
-    "cycling",
-    "elliptical",
-    "spinning",
-    "yoga",
-    "stair-climber",
-    "circuit-training",
-    "bootcamp",
-    "pilates",
-    "kickboxing",
-    "tennis",
-    "martial-arts",
-    "golf",
-    "walk",
-    "workout",
-    "swim",
-];
+const activities = {
+    "walk":4,
+    "run":11,
+    "treadmill":10,
+    "hiking":8,
+    "cycling":10,
+    "elliptical":11,
+    "stair-climber":10,
+    "swim":12,
+};
 
-activities.forEach(e=>{
+for (let activity in activities) {
+    console.log(activity);
     let optionEx = document.createElement("option");
-    optionEx.value = e;
-    optionEx.text = e.charAt(0).toUpperCase() + e.substr(1).toLowerCase();
+    optionEx.value = activity;
+    optionEx.text = activity.charAt(0).toUpperCase() + activity.substr(1).toLowerCase();
     document.querySelector("#exercise").appendChild(optionEx);
-})
+}
 
 
 //#region Charts

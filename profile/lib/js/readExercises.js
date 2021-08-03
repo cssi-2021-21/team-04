@@ -1,9 +1,22 @@
 const container = document.querySelector("#profileContainer")
-const notesRef = firebase.database().ref();
-  notesRef.on('value', (snapshot) => {
-  const data = snapshot.val();
-  renderHTML(data);
+firebase.auth().onAuthStateChanged(function (user) {
+  if (user) {
+    console.log('Logged in as: ' + user.displayName);
+    userId = user.uid;
+    getExercises(userId);
+  } else {
+    // If not logged in, navigate back to login page.
+    window.location = '/index.html';
+  };
 });
+
+const getExercises = (userId) => {
+  const notesRef = firebase.database().ref(`users/${userId}`);
+    notesRef.on('value', (snapshot) => {
+    const data = snapshot.val();
+    console.log(data);
+  });  
+}
 
 const renderHTML = (data) => {
   let domTemplate = '';
