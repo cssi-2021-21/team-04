@@ -343,7 +343,6 @@ nav > div:first-of-type {
   flex-wrap: nowrap;
 }
 nav > div:first-of-type > img {
-  border-radius: 3rem;
   width: 4rem;
 }
 nav > div:first-of-type > h1 {
