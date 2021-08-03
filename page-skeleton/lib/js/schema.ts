@@ -35,6 +35,9 @@ interface App {
             comments?: {
                 [$commentId: string]: true // the key is the comment's id
             }
+            likes?: {
+                [$uid: string]: true // the key is the liker's user id
+            }
         }
     }
     comments?: {
