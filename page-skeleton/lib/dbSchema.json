@@ -1,6 +1,6 @@
 {
     "users": {
-        "exampleUSERID": {
+        "$UID": {
             "name": "example name",
             "workouts": {
                 "exampleWORKOUTID": {
