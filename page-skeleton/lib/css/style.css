@@ -1,0 +1,94 @@
+body {
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  margin: 0;
+  display: grid;
+  grid-template-rows: min-content minmax(max-content, 1fr) min-content;
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+nav {
+  background-color: #05668D;
+  color: white;
+  padding: 10px 16px;
+  position: sticky;
+  top: 0;
+  left: 0;
+}
+nav > div.wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 16px;
+}
+nav > div.wrapper > div.logo {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+}
+nav > div.wrapper > div.logo > a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: white;
+}
+nav > div.wrapper > div.logo > a > img {
+  height: 40px;
+  width: auto;
+}
+nav > div.wrapper > div.logo > a > span {
+  flex: 1;
+  font-size: 1.6rem;
+  white-space: nowrap;
+  text-transform: lowercase;
+}
+nav > div.wrapper > div.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+nav > div.wrapper > div.links > a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+  text-transform: lowercase;
+}
+nav > div.wrapper > div.links > a:hover {
+  border-bottom-color: #02C39A;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background-color: #05668D;
+}
+footer > p {
+  margin: 0;
+  font-size: small;
+  color: white;
+}
+
+/*# sourceMappingURL=style.css.map */

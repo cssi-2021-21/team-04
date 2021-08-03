@@ -1,9 +1,28 @@
 body {
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
   margin: 0;
   display: grid;
   grid-template-rows: minmax(max-content, 1fr) min-content;
   min-height: 100vh;
   font-family: "Open Sans", sans-serif;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+}
+
+footer {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  background-color: #05668D;
+}
+footer > p {
+  margin: 0;
+  font-size: small;
+  color: white;
 }
 
 main {
@@ -148,20 +167,6 @@ main > section > div.right > div.form > div.action > button.main:not(:disabled):
 main > section > div.right > div.form > div.action > button.main:disabled {
   background-color: #e0e0e0;
   color: grey;
-}
-
-footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 6px;
-  background-color: #05668D;
-}
-footer > p {
-  margin: 0;
-  font-size: small;
-  color: white;
 }
 
 /*# sourceMappingURL=style.css.map */
