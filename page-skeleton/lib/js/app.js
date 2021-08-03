@@ -71,7 +71,6 @@ const APP = new class {
             if (!user || this._booleans.latchedOntoUser)
                 return;
 
-            const REF = DB.ref(`/users/${user.uid}`);
             DB.ref(`/users/${user.uid}`).on('value', snap => {
                 const val = snap.val();
                 if (!val) {
@@ -79,7 +78,7 @@ const APP = new class {
                         color = '#'+Math.random().toString(16).substr(2,6),
                         url = user.photoURL;
                     
-                    REF.ref('').update({
+                    DB.ref('').update({
                         [`/users/${user.uid}`]: {
                             name,
                             image: {
@@ -116,7 +115,7 @@ const APP = new class {
      * Gets the current user
      * @returns {object} the user object if logged in 
      */
-     get user() {
+    get user() {
         return AUTH.currentUser;
     }
 
