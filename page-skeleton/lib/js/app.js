@@ -932,7 +932,10 @@ const APP = new class {
                             commentRefs.push(msgRef); 
                             msgRef.on('value', msgSnap => {
                                 const msgVal = msgSnap.val();
-                                data.message = msgVal ? `${msgVal}`.trim() : "";
+                                if (msgVal === null)
+                                    data.message = ""
+                                else
+                                    data.message = `${msgVal}`.trim()
                             });
 
                             const createdRef = commentRef.child('meta').child('created');
