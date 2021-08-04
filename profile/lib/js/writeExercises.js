@@ -5,10 +5,5 @@ const duration = document.querySelector("#duration");
 
 
 submitExercise.addEventListener("click",e=>{
-  firebase.database().ref(`users/${userId}/workouts/`).push({
-    exercise: exercise.value,
-    duration: parseInt(duration.value),
-    dateTime: new Date().getTime(),
-    calories: activities[exercise.value] * parseInt(duration.value),
-  })
+  APP.logWorkout(exercise.value, parseInt(duration.value), activities[exercise.value] * parseInt(duration.value), (id)=>{console.log(id)})
 })

@@ -91,4 +91,23 @@ footer > p {
   color: white;
 }
 
+main {
+  margin: 24px;
+}
+main > section.content {
+  margin: auto;
+  max-width: 1000px;
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px;
+}
+main > section.content > div.posts {
+  background-color: #00A896;
+}
+main > section.content > div.friends {
+  background-color: blue;
+}
+
 /*# sourceMappingURL=style.css.map */

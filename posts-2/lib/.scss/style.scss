@@ -96,3 +96,22 @@ footer {
         color: white;
     }
 }
+
+main {
+    margin: 24px;
+    & > section.content {
+        margin: auto;
+        max-width: 1000px;
+        width: 100%;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 16px;
+        & > div.posts {
+            background-color: #00A896;
+        }
+        & > div.friends {
+            background-color: blue;
+        }
+    }
+}

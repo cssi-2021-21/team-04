@@ -133,6 +133,8 @@ const APP = new class {
             if (!user || this._booleans.latchedOntoUser)
                 return;
 
+            /** @type {(data: any) => any} */
+            let updateUserData = undefined
             DB.ref(`/users/${user.uid}`).on('value', snap => {
                 const val = snap.val();
                 if (!val) {
@@ -159,13 +161,19 @@ const APP = new class {
                     });
                 }
 
+                if (updateUserData)
+                    updateUserData(val);
+
                 if (this._booleans.latchedOntoUser)
                     return;
                 
                 this._booleans.latchedOntoUser = true;
                 this.registerListenerTarget(
                     DEFAULT_TARGETS.userData,
-                    callListeners => callListeners(val)
+                    callListeners => {
+                        updateUserData = callListeners;
+                        callListeners(val);
+                    }
                 );
             }, () => {
                 this._booleans.latchedOntoUser = false;
@@ -219,13 +227,15 @@ const APP = new class {
         const listener = {
             func: callback,
             dead: false,
-            id: `${target}-${this._listeners[target].length}`
+            id: null
         }
 
         if (!this._listeners[target])
             this._listeners[target] = [[undefined], listener]
         else
             this._listeners[target].push(listener);
+        
+        listener.id = `${target}-${this._listeners[target].length}`;
 
         if (callImmediately)
             callback(listener.id, ...this._listeners[target][0]);
@@ -284,8 +294,9 @@ const APP = new class {
             return;
         }
 
-        DB.ref(`/users/${this.user.uid}/friends`).update({
-            [uid]: true
+        DB.ref().update({
+            [`/users/${this.user.uid}/friends/${uid}`]: true,
+            [`/users/${uid}/friends/${this.user.uid}`]: true
         }, err => {
             if (err) {
                 if (onFail)
@@ -311,8 +322,9 @@ const APP = new class {
             return;
         }
 
-        DB.ref(`/users/${this.user.uid}/friends`).update({
-            [uid]: null
+        DB.ref().update({
+            [`/users/${this.user.uid}/friends/${uid}`]: null,
+            [`/users/${uid}/friends/${this.user.uid}`]: null
         }, err => {
             if (err) {
                 if (onFail)
@@ -340,7 +352,7 @@ const APP = new class {
             return;
         }
 
-        const root = DB.ref(`/users/${this.user.uid}/workout`);
+        const root = DB.ref(`/users/${this.user.uid}/workouts`);
         const id = root.push().key;
 
         root.child(id).set({
@@ -373,7 +385,7 @@ const APP = new class {
             return;
         }
         
-        DB.ref(`/users/${this.user.uid}/workout`).update({
+        DB.ref(`/users/${this.user.uid}/workouts`).update({
             [workoutId]: null
         }, err => {
             if (err) {
