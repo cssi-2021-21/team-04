@@ -37,10 +37,26 @@ const getPosts = () => {
         postDiv.appendChild(postWordDiv);
         postSection.appendChild(postDiv);
 
-        let post = APP.getPost(postID);
+        
+        const post = APP.getPost(postID);
+        console.log(post)
+        
+        post.$created.subscribe((data)=>{
+          if(data){
+            let date = new Date();
+            postDate.innerHTML = date.getMonth()+1+"/"+date.getDate()+"/"+date.getFullYear();
+          }
+        })
+        post.$author.subscribe((data)=>{
+          if(data){
+            posterImg.src = data.url;
+            posterName.innerHTML=data.name;
+          }
+        });
         post.$message.subscribe((data)=>{
-          console.log(data);
-          postWord.innerHTML = data;
+          if(data){
+            postWord.innerHTML = data;
+          }
         })
         // console.log(APP.user)
         // console.log(APP.lookupUser("yhUZsrVIkhM0DQEUyPeIjak3dAq1",(data)=>{console.log(data)}))

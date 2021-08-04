@@ -613,7 +613,6 @@ footer > p {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  overflow-y: scroll;
 }
 
 .workoutCard {
