@@ -50,13 +50,13 @@ const renderHTML = (data) => {
           <path d="M6.4104 9.5075L9.79728 6.19931L12.6132 8.26692L15.508 11.5752H19.2297" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M8.89152 15.7103L7.65095 16.5374H4.34277" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-        <h2> ${exerciseObj.duration} </h2>
-        <h2> ${exerciseObj.calories} </h2>
+        <h2> ${exerciseObj.duration} minute </h2>
+        <h2> ${exerciseObj.calories} calories </h2>
         <h2> ${new Date(exerciseObj.timestamp)} </h2>
         <hr>
         <div>
           <button> Edit </button>
-          <button> Delete </button>
+          <button onclick="APP.deleteWorkout('${exerciseData}')"> Delete </button>
         </div>
       </div>
       `
