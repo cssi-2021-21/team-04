@@ -42,7 +42,7 @@ class BehaviorSubject {
     next(value) {
         this._value = value;
         for (const id in this._listeners)
-            this._listeners[id](value, id);
+            this._listeners[id](this.value, id);
     }
 
     /**
@@ -834,15 +834,15 @@ const APP = new class {
                     null
                 ));
 
-                REF.child('likes').on('value', snap => {
-                    const val = snap.val();
+                REF.child('likes').on('value', likesSnap => {
+                    const likesVal = likesSnap.val();
                     const out = {
                         liked: false,
                         count: 0
                     };
 
-                    if (val) {
-                        const likers = new Set(Object.keys(val));
+                    if (likesVal) {
+                        const likers = new Set(Object.keys(likesVal));
                         if (THIS.isLoggedIn && likers.has(THIS.user.uid))
                             out.liked = true;
                         out.count = likers.size;
@@ -851,39 +851,39 @@ const APP = new class {
                     $likes.next(out);
                 });
 
-                REF.child('message').on('value', snap => {
-                    const val = snap.val();
-                    $message.next(`${val ?? ""}`.trim());
+                REF.child('message').on('value', messageSnap => {
+                    const messageVal = messageSnap.val();
+                    $message.next(`${messageVal ?? ""}`.trim());
                 });
 
-                REF.child('gif').on('value', snap => {
-                    const val = snap.val();
-                    $message.next(`${val ?? ""}`.trim());
+                REF.child('gif').on('value', gifSnap => {
+                    const snapVal = gifSnap.val();
+                    $gif.next(`${snapVal ?? ""}`.trim());
                 });
 
-                REF.child('meta').child('created').on('value', snap => {
-                    const val = snap.val();
-                    $created.next(val ?? 0);
+                REF.child('meta').child('created').on('value', createdSnap => {
+                    const createdVal = createdSnap.val();
+                    $created.next(createdVal ?? 0);
                 });
 
-                REF.child('meta').child('updated').on('value', snap => {
-                    const val = snap.val();
-                    $updated.next(val ?? 0);
+                REF.child('meta').child('updated').on('value', updatedSnap => {
+                    const updatedVal = updatedSnap.val();
+                    $updated.next(updatedVal ?? 0);
                 });
 
                 const commentRefs = [];
-                REF.child('comments').on('value', snap => {
-                    const val = snap.val();
+                REF.child('comments').on('value', commentsSnap => {
+                    const commentsVal = commentsSnap.val();
 
                     while (commentRefs.length) {
                         commentRefs[0].off();
                         commentRefs.splice(0, 1);
                     }
 
-                    if (!val)
+                    if (!commentsVal)
                         return $comments.next([]);
                     
-                    const commentators = Object.entries(val);
+                    const commentators = Object.entries(commentsVal);
                     commentators.sort((a, b) => a[1] - b[1]);
 
                     const comments = [];
