@@ -284,8 +284,9 @@ const APP = new class {
             return;
         }
 
-        DB.ref(`/users/${this.user.uid}/friends`).update({
-            [uid]: true
+        DB.ref().update({
+            [`/users/${this.user.uid}/friends/${uid}`]: true,
+            [`/users/${uid}/friends/${this.user.uid}`]: true
         }, err => {
             if (err) {
                 if (onFail)
@@ -311,8 +312,9 @@ const APP = new class {
             return;
         }
 
-        DB.ref(`/users/${this.user.uid}/friends`).update({
-            [uid]: null
+        DB.ref().update({
+            [`/users/${this.user.uid}/friends/${uid}`]: null,
+            [`/users/${uid}/friends/${this.user.uid}`]: null
         }, err => {
             if (err) {
                 if (onFail)
