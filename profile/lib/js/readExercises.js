@@ -1,13 +1,38 @@
-const container = document.querySelector("#havePlan")
-let userId;
+const container = document.querySelector("#havePlan");
+const friendList = document.querySelector("#friendList");
 
 const updateProfile = (user) => {
-  const profileName = document.querySelector("#profileName")
-  const profileDate = document.querySelector("#profileDate")
+  const profileName = document.querySelectorAll(".profileName");
+  const profileDate = document.querySelector("#profileDate");
+  const dateJoin = document.querySelector("#dateJoin");
+  const profileEmail = document.querySelector("#profileEmail");
+
   console.log(user)
+  profileName.forEach(e=>e.innerHTML=user.displayName);
+  const date = new Date();
+  profileDate.innerHTML = date.getMonth()+1+"/"+date.getDate()+"/"+date.getFullYear();
+  const dateJoinObj = new Date(parseInt(user.metadata.a));
+  dateJoin.innerHTML = dateJoinObj.getMonth()+1+"/"+dateJoinObj.getDate()+"/"+dateJoinObj.getFullYear();
+  profileEmail.innerHTML = user.email;
 }
-const getExercises = (userId) => {
-  APP.registerListener(DEFAULT_TARGETS.userData,(_, data) => {if(data) renderHTML(data.workouts)})
+
+const getFriendList = (data) => {
+  let domTemplate = '';
+  for(const friendID in data){
+    APP.lookupUser(friendID,(data)=>{
+      domTemplate+=`
+      <div class="friends" >
+        <img src="${data.url}" class="offline">
+        <div>
+            <h2> ${data.name} </h2>
+            <hr>
+            <p> Hello </p>
+        </div>
+      </div>
+        `
+    })
+  };
+  friendList.innerHTML = domTemplate;
 }
 
 const renderHTML = (data) => {
@@ -42,8 +67,9 @@ const renderHTML = (data) => {
 APP.registerListener(DEFAULT_TARGETS.user, (_,user) => {
   if (user) {
     console.log('Logged in as: ' + user.displayName);
-    userId = user.uid;
-    getExercises(userId);
+    APP.registerListener(DEFAULT_TARGETS.userData, (_, data) => {if(data) renderHTML(data.workouts)})
     updateProfile(user);
+    // getFriendList(user);
+    APP.registerListener(DEFAULT_TARGETS.userData, (_, data) => {if(data) getFriendList(data.friends)})
   }
 });
