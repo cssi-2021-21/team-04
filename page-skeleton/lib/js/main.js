@@ -20,6 +20,6 @@ console.log("main.js running.");
 //     }, false);
 // }, 4000)
 
-APP.registerListener(DEFAULT_TARGETS.user, (_, user) => {
+APP.registerListener(DEFAULT_TARGETS.userData, (_, user) => {
     console.log(user);
 }, false);

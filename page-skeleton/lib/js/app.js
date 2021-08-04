@@ -219,13 +219,15 @@ const APP = new class {
         const listener = {
             func: callback,
             dead: false,
-            id: `${target}-${this._listeners[target].length}`
+            id: null
         }
 
         if (!this._listeners[target])
             this._listeners[target] = [[undefined], listener]
         else
             this._listeners[target].push(listener);
+        
+        listener.id = `${target}-${this._listeners[target].length}`;
 
         if (callImmediately)
             callback(listener.id, ...this._listeners[target][0]);
