@@ -38,10 +38,15 @@ const getPosts = () => {
         postSection.appendChild(postDiv);
 
         let post = APP.getPost(postID);
-        post.$message.subscribe((_,data)=>{
-          console.log(data)
+        post.$message.subscribe((data)=>{
+          console.log(data);
           postWord.innerHTML = data;
         })
+        // console.log(APP.user)
+        // console.log(APP.lookupUser("yhUZsrVIkhM0DQEUyPeIjak3dAq1",(data)=>{console.log(data)}))
+        // console.log(APP.removeFriend("XL8oDhmIBMR6lU41pqPhrwz7ejt1"))
+        // console.log(APP.logWorkout("running",12,110,(id)=>console.log(id)))
+        // console.log(APP.updateUserInfo())
       }
       // renderHTML(data);
   });  
