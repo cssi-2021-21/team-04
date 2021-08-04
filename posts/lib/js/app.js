@@ -24,7 +24,7 @@ class BehaviorSubject {
      */
     constructor(defaultValue) {
         this._value = defaultValue;
-        this.listeners = {}
+        this._listeners = {};
     }
 
     /**
@@ -41,23 +41,23 @@ class BehaviorSubject {
      */
     next(value) {
         this._value = value;
-        for (const id in this.listeners)
-            this.listeners[id](id, value);
+        for (const id in this._listeners)
+            this._listeners[id](value, id);
     }
 
     /**
      * Attaches a callback to the BehaviorSubject
-     * @param {(id: string, val: T) => any} callback the callback to run when a new value gets fed in
+     * @param {(val: T, id: string) => any} callback the callback to run when a new value gets fed in
      * @returns {void} Nothing 
      */
     subscribe(callback) {
         let id;
         do {
             id = ""+Math.random().toString(16).slice(2)
-        } while (this.listeners[id])
+        } while (this._listeners[id])
 
-        this.listeners[id] = callback;
-        callback(id, this.value);
+        this._listeners[id] = callback;
+        callback(this.value, id);
     }
 
     /**
@@ -66,7 +66,7 @@ class BehaviorSubject {
      * @returns {void} Nothing
      */
     unsubscribe(id) {
-        delete this.listeners[id];
+        delete this._listeners[id];
     }
 
 }
@@ -592,7 +592,7 @@ const APP = new class {
     }
 
     /**
-     * Creates a comment on a post provied by id
+     * Creates a comment on a post provided by id
      * @param {string} postId the id of the post to comment on
      * @param {string} message the message to send with the comment
      * @param {(id: string) => any} [onSuccess] the callback to run when operation is successful (id = id of comment)
@@ -790,7 +790,7 @@ const APP = new class {
     }
 
     /**
-     * Fetches a rendered informational object 
+     * Fetches a rendered informational object about a post that updates in real-time
      * @param {string} postId the id of the post to fetch
      */
     getPost(postId) {
