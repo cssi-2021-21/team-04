@@ -853,12 +853,12 @@ const APP = new class {
 
                 REF.child('message').on('value', snap => {
                     const val = snap.val();
-                    $message.next(val ? `${val}`.trim() : "");
+                    $message.next(`${val ?? ""}`.trim());
                 });
 
                 REF.child('gif').on('value', snap => {
                     const val = snap.val();
-                    $message.next(val ? `${val}`.trim() : "");
+                    $message.next(`${val ?? ""}`.trim());
                 });
 
                 REF.child('meta').child('created').on('value', snap => {
@@ -932,7 +932,10 @@ const APP = new class {
                             commentRefs.push(msgRef); 
                             msgRef.on('value', msgSnap => {
                                 const msgVal = msgSnap.val();
-                                data.message = msgVal ? `${msgVal}`.trim() : "";
+                                if (msgVal === null)
+                                    data.message = "";
+                                else
+                                    data.message = `${msgVal}`.trim();
                             });
 
                             const createdRef = commentRef.child('meta').child('created');

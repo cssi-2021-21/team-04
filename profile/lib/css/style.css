@@ -4,11 +4,31 @@ body {
   background: linear-gradient(135deg, #028090 0%, #00a896 100%);
 }
 
+.chartSection {
+  padding: 3rem 0rem;
+  text-align: center;
+  width: clamp(25rem, 90%, 100rem);
+  margin: 4rem auto;
+  border-radius: 0.2rem;
+  background-color: white;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.329);
+}
+.chartSection > h2 {
+  font-size: 3rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.chartSection > hr {
+  width: 80%;
+  margin: 2rem auto;
+}
+
 .charts {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  gap: 2rem;
+  gap: 3rem;
 }
 .charts > div {
   flex: 1;
@@ -16,7 +36,11 @@ body {
   border-radius: 0.5rem;
   background-color: rgba(255, 255, 255, 0.918);
   margin: auto;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
+  transition: all ease-out 0.2s;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.329);
+}
+.charts > div:hover {
+  box-shadow: 0px 0px 20px #05668da1;
 }
 
 nav {
@@ -110,10 +134,8 @@ footer > p {
   width: clamp(25rem, 90%, 100rem);
   margin: auto;
   text-align: center;
-  padding: 0.25rem;
+  padding: 3rem 0rem;
   border-radius: 0.2rem;
-  word-spacing: 1rem;
-  letter-spacing: 0.25rem;
   margin-top: 4rem;
   user-select: none;
 }
@@ -122,6 +144,7 @@ footer > p {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-weight: 800;
+  margin: 0;
   font-size: clamp(2rem, 4rem, 4rem);
 }
 
@@ -196,8 +219,10 @@ footer > p {
 }
 .profileSec > div:nth-of-type(2) > h1 {
   font-size: 3rem;
-  letter-spacing: 0.75rem;
   margin: 0;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .profileSec > div:nth-of-type(3) {
   display: flex;
@@ -209,8 +234,10 @@ footer > p {
 }
 .profileSec > div:nth-of-type(3) > h1 {
   font-size: 3rem;
-  letter-spacing: 0.75rem;
   margin: 0;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 .profileSec > div:nth-of-type(3) > div {
   width: clamp(25rem, 90%, 90rem);
@@ -371,6 +398,10 @@ footer > p {
 }
 .workout > h2 {
   font-size: 3rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
 }
 .workout > hr {
   color: black;
@@ -577,6 +608,12 @@ footer > p {
 }
 .modal .workoutModal > div > button:last-of-type {
   background-color: #ff5b5b;
+}
+.modal .friendsModal {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  overflow-y: scroll;
 }
 
 .workoutCard {
