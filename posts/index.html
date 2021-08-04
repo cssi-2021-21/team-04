@@ -35,21 +35,30 @@
                 <button class="closeAlert"> Okay </button>
             </div>
             <div class="postCreation">
+                <h1> Create your post! </h1>
+                <hr>
                 <!-- text post -->
                 <textarea id="postText" placeholder="Enter your post text"></textarea>
                 <!-- gif search -->
-                <button>Add a gif to your post?</button>
+                <div class="gifSearch">
+                    <button>Add a gif to your post?</button>
+                </div>
                 <div id="gify" style="display:none">
                     <input type="text" name="" id="gifySearch" placeholder="What would you like to search for?">
                     <div id="gifySelectionContainer"></div>
                 </div>
-                <input type="text" name="" id="postImage" placeholder="Would you like to add an image?">
-                <!-- submit button -->
+                <div class="postImage">
+                    <input type="text" name="" id="postImage" placeholder="Would you like to add an image?">
+                </div>
                 <!-- checkbox for public/private -->
-                <p>Would you like your post to be private? <input type="checkbox" name="" id="pubpri"></p>
-                <br>
-                <button class="closeAlert"> Submit </button>
-                <button class="closeAlert"> Cancel </button>
+                <div class="pubOrPri"> 
+                    <p>Would you like your post to be private? <input type="checkbox" name="" id="pubpri" class="pubpri"></p>
+                </div>
+                <hr>
+                <div class="closeDiv">
+                    <button class="closeAlert"> Submit </button>
+                    <button class="closeAlert"> Cancel </button>
+                </div>
             </div>
         </div>
     </section>
