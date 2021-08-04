@@ -122,7 +122,8 @@ const phoneAlert = document.querySelector("#phoneAlert")
 phoneAlert.style.display = "none"
 const deleteAccModal = document.querySelector("#deleteAccModal")
 deleteAccModal.style.display = "none"
-
+const workoutModal = document.querySelector("#workoutModal");
+workoutModal.style.display = "none"
 
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
     // Make modal Appear to warn people
@@ -163,4 +164,30 @@ confirmDelete.addEventListener('click', e => {
 //#region Workout Card|| Ideally we refresh it per day
 const workoutNoPlan = document.querySelector("#noPlan")
 workoutNoPlan.style.display = "none"
+
+const addWorkoutBtn = document.querySelector("#addWorkout")
+addWorkoutBtn.addEventListener('click', () => {
+    modal.style.display = "grid"
+    workoutModal.style.display = "flex"
+})
+
+//Workout-CARD editing / deleting
+
+
+//Workout saving / discarding
+const saveWorkout = document.querySelector("#submitExercise");
+const discardWorkout = document.querySelector("#discardExercise");
+
+saveWorkout.addEventListener('click', e => {
+    hideWorkoutModal();
+})
+
+discardWorkout.addEventListener('click', e => {
+    hideWorkoutModal();
+})
+
+const hideWorkoutModal = () => {
+    modal.style.display = "none"
+    workoutModal.style.display = "none"
+}
 //#endregion
