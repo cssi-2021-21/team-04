@@ -69,7 +69,6 @@ APP.registerListener(DEFAULT_TARGETS.user, (_,user) => {
     console.log('Logged in as: ' + user.displayName);
     APP.registerListener(DEFAULT_TARGETS.userData, (_, data) => {if(data) renderHTML(data.workouts)})
     updateProfile(user);
-    // getFriendList(user);
     APP.registerListener(DEFAULT_TARGETS.userData, (_, data) => {if(data) getFriendList(data.friends)})
   }
 });
