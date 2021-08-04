@@ -124,6 +124,8 @@ const deleteAccModal = document.querySelector("#deleteAccModal")
 deleteAccModal.style.display = "none"
 const workoutModal = document.querySelector("#workoutModal");
 workoutModal.style.display = "none"
+const friendsModal = document.querySelector("#friendsModal");
+friendsModal.style.display = "none"
 
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
     // Make modal Appear to warn people
@@ -157,6 +159,15 @@ confirmDelete.addEventListener('click', e => {
     const deleteAccModal = document.querySelector("#deleteAccModal")
     deleteAccModal.style.display = "none"
 })
+
+//For Friends Modal
+const friends = document.querySelectorAll(".friends");
+for (const friend of friends ){
+    friend.addEventListener('click', () => {
+        modal.style.display = "grid"
+        friendsModal.style.display = "flex"
+    })
+} 
 
 //#endregion
 
