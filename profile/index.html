@@ -56,7 +56,21 @@
                 <button class="closeAlert" id="confirmDelete"> Confirm </button>
             </div>
             <div class="workoutModal" id="workoutModal">
-                
+                <h1> Add Work out </h1>
+                <hr>
+                <div>
+                    <form action="">
+                        <select id="exercise" name="exercise">
+                            <option value="" disabled selected>Select an exercise</option>
+                        </select>
+                        <input type="number" name="duration" id="duration" placeholder="Workout Duration">
+                    </form>
+                </div>
+                <hr>
+                <div>
+                    <button button id="submitExercise"> Save </button>
+                    <button button id="discardExercise"> Discard </button>
+                </div>
             </div>
         </div>
     </section>
@@ -341,7 +355,7 @@
         <!-- new workouts go here -->
         <div id="profileContainer"></div>
     </div>
-    <div class="section">
+    <!-- <div class="section">
         <h2>Add New Workout</h2>
         <center>
             <form action="">
@@ -352,7 +366,7 @@
                 <button id="submitExercise">Submit Workout</button>
             </form>
         </center>
-    </div>
+    </div> -->
     <div class="section">
         <h2>Your Progress Over the Last Week</h2>
         <div class="charts">

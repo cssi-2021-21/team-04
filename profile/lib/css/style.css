@@ -464,7 +464,7 @@ footer > p {
   text-align: center;
 }
 .modal > div {
-  width: clamp(28rem, 50%, 100rem);
+  width: clamp(25rem, 50%, 100rem);
   background-color: white;
   padding: 1rem;
   border-radius: 0.2rem;
@@ -510,6 +510,73 @@ footer > p {
   transform: translateY(-10%);
   color: white;
   background: #ff5b5b;
+}
+.modal .workoutModal {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+.modal .workoutModal > hr {
+  width: 80%;
+}
+.modal .workoutModal > h1 {
+  font-size: 3rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 0;
+}
+.modal .workoutModal > div > form {
+  display: flex;
+  flex-direction: column;
+  width: 50%;
+  margin: auto;
+  gap: 2rem;
+}
+.modal .workoutModal > div > form > select {
+  height: 4rem;
+  color: white;
+  border-radius: 0.2rem;
+  font-size: 1.5rem;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  outline: none;
+}
+.modal .workoutModal > div > form > select > option {
+  color: white;
+  background-color: #00A896;
+}
+.modal .workoutModal > div > form > input {
+  height: 2rem;
+  padding: 1rem;
+  border-radius: 0.2rem;
+  color: white;
+  font-size: 2rem;
+  border: none;
+  outline: none;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+.modal .workoutModal > div > form > input::placeholder {
+  color: white;
+}
+.modal .workoutModal > div > button {
+  border: none;
+  border-radius: 0.2rem;
+  padding: 1rem 4rem;
+  color: white;
+  font-size: 1.5rem;
+  transition: all ease-out 0.2s;
+  margin: 0rem 1rem;
+}
+.modal .workoutModal > div > button:hover {
+  transform: translateY(-10%);
+}
+.modal .workoutModal > div > button:first-of-type {
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+.modal .workoutModal > div > button:last-of-type {
+  background-color: #ff5b5b;
 }
 
 .workoutCard {

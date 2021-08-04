@@ -170,4 +170,24 @@ addWorkoutBtn.addEventListener('click', () => {
     modal.style.display = "grid"
     workoutModal.style.display = "flex"
 })
+
+//Workout-CARD editing / deleting
+
+
+//Workout saving / discarding
+const saveWorkout = document.querySelector("#submitExercise");
+const discardWorkout = document.querySelector("#discardExercise");
+
+saveWorkout.addEventListener('click', e => {
+    hideWorkoutModal();
+})
+
+discardWorkout.addEventListener('click', e => {
+    hideWorkoutModal();
+})
+
+const hideWorkoutModal = () => {
+    modal.style.display = "none"
+    workoutModal.style.display = "none"
+}
 //#endregion
