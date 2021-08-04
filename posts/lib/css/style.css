@@ -340,6 +340,91 @@ body {
   color: white;
   background-color: #05668D;
 }
+.modal .postCreation {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.modal .postCreation > h1 {
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 2rem;
+  margin: 0;
+}
+.modal .postCreation > hr {
+  width: 80%;
+}
+.modal .postCreation > textarea {
+  width: 75%;
+  height: 10rem;
+  resize: none;
+  margin: auto;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  color: white;
+  border: none;
+  outline: none;
+  border-radius: 0.2rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+}
+.modal .postCreation > textarea::placeholder {
+  color: white;
+}
+.modal .postCreation .postImage > input {
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  border: none;
+  outline: none;
+  width: 75%;
+  height: 2rem;
+  font-size: 1.25rem;
+  padding: 0.5rem;
+  border-radius: 0.2rem;
+  text-align: center;
+  color: white;
+}
+.modal .postCreation .postImage > input::placeholder {
+  color: white;
+}
+.modal .postCreation .gifSearch > button {
+  color: white;
+  border: none;
+  border-radius: 0.2rem;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  transition: all ease-out 0.2s;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+.modal .postCreation .gifSearch > button:hover {
+  transform: translateY(-10%);
+}
+.modal .postCreation .pubOrPri {
+  margin: 0;
+}
+.modal .postCreation .pubOrPri > p {
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.2rem;
+}
+.modal .postCreation .closeDiv > button {
+  font-size: 1.2rem;
+  padding: 1rem 2rem;
+  margin: 0rem 1rem;
+  border: none;
+  border-radius: 0.2rem;
+  color: white;
+  transition: all ease-out 0.2s;
+}
+.modal .postCreation .closeDiv > button:first-of-type {
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+}
+.modal .postCreation .closeDiv > button:last-of-type {
+  background: #ff5b5b;
+}
+.modal .postCreation .closeDiv > button:hover {
+  transform: translateY(-10%);
+}
 
 nav {
   display: flex;
@@ -426,9 +511,9 @@ footer > p {
   font-weight: 800;
 }
 
-textarea {
-  width: 100%;
-  height: 100px;
+.pubpri {
+  background-color: #00A896;
+  padding: 2rem;
 }
 
 /*# sourceMappingURL=style.css.map */
