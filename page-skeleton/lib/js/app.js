@@ -11,6 +11,66 @@ firebase.initializeApp({
 });
 const [ DB, AUTH ] = "database:auth".split(':').map(e => firebase[e]());
 
+// # UTIL
+/**
+ * @template T
+ */
+class BehaviorSubject {
+
+    /**
+     * Creates a new BehaviorSubject with the provided default value
+     * @param {T} defaultValue any default value 
+     * @returns {BehaviorSubject} an instance of BehaviorSubject
+     */
+    constructor(defaultValue) {
+        this._value = defaultValue;
+        this.listeners = {}
+    }
+
+    /**
+     * Get the current value
+     * @returns {T} the current value of the BehaviorSubject
+     */
+    get value() {
+        return this._value
+    }
+
+    /**
+     * Feeds in the next value
+     * @param {T} value the new value to give to listeners
+     */
+    next(value) {
+        this._value = value;
+        for (const id in this.listeners)
+            this.listeners[id](id, value);
+    }
+
+    /**
+     * Attaches a callback to the BehaviorSubject
+     * @param {(id: string, val: T) => any} callback the callback to run when a new value gets fed in
+     * @returns {void} Nothing 
+     */
+    subscribe(callback) {
+        let id;
+        do {
+            id = ""+Math.random().toString(16).slice(2)
+        } while (this.listeners[id])
+
+        this.listeners[id] = callback;
+        callback(id, this.value);
+    }
+
+    /**
+     * Deletes a listener from the BehaviorSubject
+     * @param {string} id the id of the callback to delete 
+     * @returns {void} Nothing
+     */
+    unsubscribe(id) {
+        delete this.listeners[id];
+    }
+
+}
+
 // # APP
 const REGEXES = Object.freeze({
     hexColor: /^#(?:[0-9a-f]{3}){1,2}$/i,
@@ -55,6 +115,8 @@ const APP = new class {
                     return;
 
                 for (const [uid, user] of Object.entries(val)) {
+                    if (!this._values.users[uid])
+                        this._values.users[uid] = {};
                     this._values.users[uid].name = user.name;
                     this._values.users[uid].color = user.color;
                     this._values.users[uid].url = user.url || null;
@@ -78,7 +140,7 @@ const APP = new class {
                         color = '#'+Math.random().toString(16).substr(2,6),
                         url = user.photoURL;
                     
-                    DB.ref('').update({
+                    DB.ref().update({
                         [`/users/${user.uid}`]: {
                             name,
                             image: {
@@ -203,8 +265,7 @@ const APP = new class {
         const getUser = () => this._values.users[uid] || null;
         if (callbackOnUpdate)
             this.registerListener(DEFAULT_TARGETS.publicUsers,
-                () => callbackOnUpdate(getUser()),
-                false
+                () => callbackOnUpdate(getUser())
             );
         return getUser();
     }
@@ -380,7 +441,7 @@ const APP = new class {
             payload[`/public-users/${uid}/url`] = url;
         }
         
-        DB.ref('').update(payload, err => {
+        DB.ref().update(payload, err => {
             if (err) {
                 if (onFail)
                     onFail(new Error(err.message));
@@ -394,13 +455,13 @@ const APP = new class {
     /**
      * Creates a new post using the current user's credentials.
      * @param {string} message the message to send with the post
-     * @param {boolean} [isPublic = true] whether or not to make the post public
      * @param {string} [gif] the url of the GIF to send with the post
+     * @param {boolean} [isPublic = true] whether or not to make the post public
      * @param {(id: string) => any} [onSuccess] the callback to run when operation is successful (id = id of post)
      * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
      * @returns {void} Nothing 
      */
-    createPost(message, isPublic = true, gif, onSuccess, onFail) {
+    createPost(message, gif, isPublic = true, onSuccess, onFail) {
         if (!this.isLoggedIn) {
             if (onFail)
                 onFail(new Error("Cannot create post because the current user is not logged in."));
@@ -414,7 +475,7 @@ const APP = new class {
             return;
         }
 
-        const parsedGif = gif === null || gif === undefined ? gif : `${gif}`.trim();
+        const parsedGif = gif === null || gif === undefined ? null : `${gif}`.trim();
         if (typeof parsedGif == "string" && !REGEXES.url.test(parsedGif)) {
             if (onFail)
                 onFail(new Error("GIF url is invalid."));
@@ -425,7 +486,7 @@ const APP = new class {
         const id = root.push().key;
         const stamp = new Date().getTime();
 
-        root.chld(id).set({
+        root.child(id).set({
             author: this.user.uid,
             public: isPublic,
             gif: parsedGif,
@@ -563,8 +624,8 @@ const APP = new class {
                 const id = DB.ref(`/comments`).push().key;
                 const stamp = new Date().getTime();
 
-                DB.ref('').update({
-                    [`/posts/${postId}/comments/${id}`]: true,
+                DB.ref().update({
+                    [`/posts/${postId}/comments/${id}`]: stamp,
                     [`/comments/${id}`]: {
                         author: this.user.uid,
                         message: parsedMessage,
@@ -637,13 +698,268 @@ const APP = new class {
                         return;
                     }
                     if (onSuccess)
-                        onSuccess(id);
+                        onSuccess();
                 });
             })
             .catch(err => {
                 if (err && onFail)
                     onFail(new Error(err.message));
             });
+    }
+
+    /**
+     * Like a post using the current user's credentials
+     * @param {string} postId the id of the post to comment on
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     */
+    likePost(postId, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot like post because the current user is not logged in."));
+            return;
+        }
+        
+        const ref = DB.ref(`/posts/${postId}`);
+        ref.once('value')
+            .then(snap => snap.val())
+            .then(val => {
+                if (!val) {
+                    if (onFail)
+                        onFail(new Error("Post does not exist."));
+                    return;
+                }
+
+                ref.child('likes').update({
+                    [this.user.uid]: true
+                }, err => {
+                    if (err) {
+                        if (onFail)
+                            onFail(new Error("Failed to like the post: " + err.message));
+                        return;
+                    }
+                    if (onSuccess)
+                        onSuccess();
+                });
+            })
+            .catch(err => {
+                if (err && onFail)
+                    onFail(new Error(err.message));
+            });
+    }
+
+    /**
+     * Remove the user's like from a post
+     * @param {string} postId the id of the post to comment on
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     */
+    hatePost(postId, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot unlike post because the current user is not logged in."));
+            return;
+        }
+        
+        const ref = DB.ref(`/posts/${postId}`);
+        ref.once('value')
+            .then(snap => snap.val())
+            .then(val => {
+                if (!val) {
+                    if (onFail)
+                        onFail(new Error("Post does not exist."));
+                    return;
+                }
+
+                ref.child('likes').update({
+                    [this.user.uid]: null
+                }, err => {
+                    if (err) {
+                        if (onFail)
+                            onFail(new Error("Failed to unlike the post: " + err.message));
+                        return;
+                    }
+                    if (onSuccess)
+                        onSuccess();
+                });
+            })
+            .catch(err => {
+                if (err && onFail)
+                    onFail(new Error(err.message));
+            });
+    }
+
+    /**
+     * Fetches a rendered informational object 
+     * @param {string} postId the id of the post to fetch
+     */
+    getPost(postId) {
+        const THIS = this;
+
+        /** @type {BehaviorSubject<{ id: string, name: string, color: string, url: string | null }>} */
+        const $author = new BehaviorSubject(null);
+
+        /** @type {BehaviorSubject<{ liked: boolean, count: number }>} */
+        const $likes = new BehaviorSubject(null);
+
+        /** @type {BehaviorSubject<string>} */
+        const $message = new BehaviorSubject(null);
+
+        /** @type {BehaviorSubject<string>} */
+        const $gif = new BehaviorSubject(null);
+
+        /** @type {BehaviorSubject<number>} */
+        const $created = new BehaviorSubject(null);
+
+        /** @type {BehaviorSubject<number>} */
+        const $updated = new BehaviorSubject(null);
+
+        /** @type {BehaviorSubject<{ author: { id: string, name: string, color: string, url: string | null }, message: string, created: number, updated: number }[]>} */
+        const $comments = new BehaviorSubject(null);
+
+        const REF = DB.ref(`/posts/${postId}`);
+        REF.once('value')
+            .then(snap => snap.val())
+            .then(val => {
+                if (!val)
+                    return;
+
+                const authorId = val.author;
+                THIS.lookupUser(authorId, data => $author.next(
+                    data ?
+                    {
+                        id: authorId,
+                        ...data
+                    } :
+                    null
+                ));
+
+                REF.child('likes').on('value', snap => {
+                    const val = snap.val();
+                    const out = {
+                        liked: false,
+                        count: 0
+                    };
+
+                    if (val) {
+                        const likers = new Set(Object.keys(val));
+                        if (THIS.isLoggedIn && likers.has(THIS.user.uid))
+                            out.liked = true;
+                        out.count = likers.size;
+                    }
+                    
+                    $likes.next(out);
+                });
+
+                REF.child('message').on('value', snap => {
+                    const val = snap.val();
+                    $message.next(val ? `${val}`.trim() : "");
+                });
+
+                REF.child('gif').on('value', snap => {
+                    const val = snap.val();
+                    $message.next(val ? `${val}`.trim() : "");
+                });
+
+                REF.child('meta').child('created').on('value', snap => {
+                    const val = snap.val();
+                    $created.next(val ?? 0);
+                });
+
+                REF.child('meta').child('updated').on('value', snap => {
+                    const val = snap.val();
+                    $updated.next(val ?? 0);
+                });
+
+                const commentRefs = [];
+                REF.child('comments').on('value', snap => {
+                    const val = snap.val();
+
+                    while (commentRefs.length) {
+                        commentRefs[0].off();
+                        commentRefs.splice(0, 1);
+                    }
+
+                    if (!val)
+                        return $comments.next([]);
+                    
+                    const commentators = Object.entries(val);
+                    commentators.sort((a, b) => a[1] - b[1]);
+
+                    const comments = [];
+                    for (const [commentId] of commentators) {
+                        const data = {
+                            author: { 
+                                id: null, 
+                                name: null, 
+                                color: null, 
+                                url: null 
+                            }, 
+                            message: "", 
+                            created: 0, 
+                            updated: 0
+                        }
+                        comments.push(data);
+
+                        const emptyAuthor = () => {
+                            data.author.id = null;
+                            data.author.name = null;
+                            data.author.color = null;
+                            data.author.url = null;
+                        }
+
+                        const commentRef = DB.ref(`/comments/${commentId}`);
+                        commentRef.once('value', commentSnap => {
+                            const commentVal = commentSnap.val();
+                            if (!commentVal) {
+                                data.message = "";
+                                data.created = 0;
+                                data.updated = 0;
+                                return emptyAuthor();
+                            }
+
+                            const commentAuthorId = commentVal.author;
+                            THIS.lookupUser(commentAuthorId, authorData => {
+                                if (!authorData)
+                                    return emptyAuthor();
+                                data.author.id = commentAuthorId;
+                                data.author.name = authorData.name;
+                                data.author.color = authorData.color;
+                                data.author.url = authorData.url || null;
+                            });
+
+                            const msgRef = commentRef.child('message');
+                            commentRefs.push(msgRef); 
+                            msgRef.on('value', msgSnap => {
+                                const msgVal = msgSnap.val();
+                                data.message = msgVal ? `${msgVal}`.trim() : "";
+                            });
+
+                            const createdRef = commentRef.child('meta').child('created');
+                            commentRefs.push(createdRef); 
+                            createdRef.on('value', createdSnap => data.created = createdSnap.val() ?? 0);
+
+                            const updatedRef = commentRef.child('meta').child('created');
+                            commentRefs.push(updatedRef); 
+                            updatedRef.on('value', updatedSnap => data.updated = updatedSnap.val() ?? 0);
+                        });
+                    }
+
+                    $comments.next(comments);
+                })
+            })
+            .catch(() => {});
+
+        return {
+            id: postId,
+            $author,
+            $likes,
+            $message,
+            $gif,
+            $created,
+            $updated,
+            $comments
+        };
     }
 
 }()
