@@ -1073,32 +1073,33 @@ const APP = new class {
                     const comments = [];
                     for (const [commentId] of commentators) {
                         const data = {
+                            /** @type {{ [s: string]: BehaviorSubject<string> }} */
                             author: { 
-                                id: null, 
-                                name: null, 
-                                color: null, 
-                                url: null 
+                                $id: new BehaviorSubject(null), 
+                                $name: new BehaviorSubject(null), 
+                                $color: new BehaviorSubject(null), 
+                                $url: new BehaviorSubject(null)
                             }, 
-                            message: "", 
-                            created: 0, 
-                            updated: 0
+                            $message: new BehaviorSubject(""), 
+                            $created: new BehaviorSubject(0),
+                            $updated: new BehaviorSubject(0)
                         }
                         comments.push(data);
 
                         const emptyAuthor = () => {
-                            data.author.id = null;
-                            data.author.name = null;
-                            data.author.color = null;
-                            data.author.url = null;
+                            data.author.$id.next(null);
+                            data.author.$name.next(null);
+                            data.author.$color.next(null);
+                            data.author.$url.next(null);
                         }
 
                         const commentRef = DB.ref(`/comments/${commentId}`);
                         commentRef.once('value', commentSnap => {
                             const commentVal = commentSnap.val();
                             if (!commentVal) {
-                                data.message = "";
-                                data.created = 0;
-                                data.updated = 0;
+                                data.$message.next("");
+                                data.$created.next(0);
+                                data.$updated.next(0);
                                 return emptyAuthor();
                             }
 
@@ -1106,29 +1107,26 @@ const APP = new class {
                             THIS.lookupUser(commentAuthorId, authorData => {
                                 if (!authorData)
                                     return emptyAuthor();
-                                data.author.id = commentAuthorId;
-                                data.author.name = authorData.name;
-                                data.author.color = authorData.color;
-                                data.author.url = authorData.url || null;
+                                data.author.$id.next(commentAuthorId);
+                                data.author.$name.next(authorData.name);
+                                data.author.$color.next(authorData.color);
+                                data.author.$url.next(authorData.url || null);
                             });
 
                             const msgRef = commentRef.child('message');
                             commentRefs.push(msgRef); 
                             msgRef.on('value', msgSnap => {
                                 const msgVal = msgSnap.val();
-                                if (msgVal === null)
-                                    data.message = "";
-                                else
-                                    data.message = `${msgVal}`.trim();
+                                data.$message.next(msgVal === null ? "" : `${msgVal}`.trim());
                             });
 
                             const createdRef = commentRef.child('meta').child('created');
                             commentRefs.push(createdRef); 
-                            createdRef.on('value', createdSnap => data.created = createdSnap.val() ?? 0);
+                            createdRef.on('value', createdSnap => data.$created.next(createdSnap.val() ?? 0));
 
                             const updatedRef = commentRef.child('meta').child('created');
                             commentRefs.push(updatedRef); 
-                            updatedRef.on('value', updatedSnap => data.updated = updatedSnap.val() ?? 0);
+                            updatedRef.on('value', updatedSnap => data.$updated.next(updatedSnap.val() ?? 0));
                         });
                     }
 

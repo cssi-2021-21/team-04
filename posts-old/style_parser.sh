@@ -1,1 +1,0 @@
-sass --watch lib/.scss:lib/css

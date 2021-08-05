@@ -20,8 +20,44 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
         return selectorOrTarget.querySelector(selector);
     }
 
+    const MODALS_SVC = new class {
+
+        /** @type {Set<string>} */
+        _active = new Set()
+
+        /**
+         * Updates the UI based on the number 
+         * @returns {void} Nothing
+         */
+        updateUI() {
+            document.body.classList[this._active.size ? "add" : "remove"]("modal-open");
+        }
+
+        /**
+         * Logs a modal ID to mark it as active
+         * @param {string} id the id of the modal
+         * @returns {void} Nothing
+         */
+        logModal(id) {
+            this._active.add(id);
+            this.updateUI();
+        }
+
+        /**
+         * Remvoes a logged modal ID to mark it as inactive
+         * @param {string} id the id of the modal
+         * @returns {void} Nothing
+         */
+        removeModal(id) {
+            this._active.delete(id);
+            this.updateUI();
+        }
+
+    }();
+
     const GIF_SEARCHER = new class {
 
+        id = "GIF_SEARCHER";
         node = get("main > section.gif-searcher");
 
         /** @type {{ [s: string]: HTMLElement }} */
@@ -220,6 +256,7 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
          * @returns {void} Nothing
          */
         open() {
+            MODALS_SVC.logModal(this.id);
             this._nodes.searchInput.value = '';
             this.node.classList.remove("hidden");
             this.emptyResults();
@@ -230,6 +267,7 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
          * @param {string} val the result of the search to end the service with
          */
         close(val = "") {
+            MODALS_SVC.removeModal(this.id);
             this.node.classList.add("hidden");
             this.$close.next(`${val}`.trim());
             this.emptyResults();
@@ -246,6 +284,7 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
 
     const POST_EDITOR = new class {
 
+        id = "POST_EDITOR";
         node = get("main > section.post-editor");
         busy = false;
 
@@ -437,6 +476,7 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
          */
         _toggle(hide = true) {
             this.node.classList[hide ? "add" : "remove"]("hidden");
+            MODALS_SVC[hide ? "removeModal" : "logModal"](this.id);
         }
 
         /**
@@ -482,6 +522,277 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
                 message: (this._nodes.messageInput.innerText || "").trim(),
                 gif: (this._nodes.gifInput.value || "").trim()
             }
+        }
+
+    }();
+
+    const POST_VIEWER = new class {
+
+        id = "POST_VIEWER";
+        _count = 0;
+
+        node = get("main > section.post-viewer");
+
+        /** @type {{ [s: string]: HTMLElement }} */
+        _nodes = {
+            container: null,
+            titleSpan: null,
+            message: null,
+            input: null,
+            button: null,
+            commentsBox: null
+        }
+
+        /** @type {string} */
+        _currentPostId = null;
+
+        /** @type {(() => any)[]} */
+        _listenerKillers = [];
+
+        constructor() {
+            this.node.innerHTML = `
+                <span class="material-icons-outlined">close</span>
+                <div class="content">
+                    <h1 class="title">comments to post by <span>ME</span></h1>
+                    <p class="message">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam, laboriosam.</p>
+                    <form action="javascript:void(0)" class="input">
+                        <input type="text" placeholder="write a comment">
+                        <button>
+                            <span class="material-icons-outlined">send</span>
+                        </button>
+                    </form>
+                    <div class="comments"></div>
+                </div>
+            `;
+
+            this._nodes.container = get(this.node, "div.content");
+            this._nodes.titleSpan = get(this._nodes.container, "h1.title > span");
+            this._nodes.message = get(this._nodes.container, "p.message");
+            this._nodes.input = get(this._nodes.container, "form > input");
+            this._nodes.button = get(this._nodes.container, "form > button");
+            this._nodes.commentsBox = get(this._nodes.container, "div.comments");
+
+            this.node.addEventListener('click', () => this.close());
+            this._nodes.container.addEventListener('click', e => e.stopPropagation());
+            this._nodes.button.addEventListener('click', () => {
+                if (!this._currentPostId)
+                    return;
+                
+                const msg = (this._nodes.input.value || "").trim();
+                if (!msg)
+                    return;
+
+                this._nodes.input.value = null;
+                APP.createComment(this._currentPostId, msg);
+            });
+        }
+
+        /**
+         * Empties the comments box.
+         * @returns {void} Nothing
+         */
+        emptyComments() {
+            this._nodes.commentsBox.innerHTML = `<p>you will be the first to comment!</p>`;
+        }
+
+        /**
+         * Shows/hides the post viewer
+         * @param {boolean} [hide = true] whether or not to hide the editor
+         */
+         _toggle(hide = true) {
+            this.node.classList[hide ? "add" : "remove"]("hidden");
+            MODALS_SVC[hide ? "removeModal" : "logModal"](this.id);
+            this.killListeners();
+        }
+
+        /**
+         * Adds a killer function to memory.
+         * @param {BehaviorSubject} $subject the subject to command
+         * @param {string} id the id of the listener
+         * @returns {void} Nothing
+         */
+        logKiller($subject, id) {
+            this._listenerKillers.push(() => $subject.unsubscribe(id));
+        }
+
+        /**
+         * Kills all active listeners.
+         * @returns {void} Nothing
+         */
+        killListeners() {
+            while (this._listenerKillers.length) {
+                this._listenerKillers[0]();
+                this._listenerKillers.splice(0, 1);
+            }
+        }
+
+        /**
+         * Opens a post using its ID.
+         * @param {string} postId the id of the post to open
+         * @returns {void} Nothing
+         */
+        open(postId) {
+            this._toggle(false);
+            this._currentPostId = postId;
+            
+            const post = APP.getPost(postId);
+
+            let authorLogged = false;
+            post.$author.subscribe((val, id) => {
+                if (!authorLogged) {
+                    this.logKiller(post.$author, id);
+                    authorLogged = true;
+                }
+
+                if (!val)
+                    return;
+                
+                this._nodes.titleSpan.innerText = val.name ?? "NAME";
+            });
+
+            let postMessageLogged = false;
+            post.$message.subscribe((val, id) => {
+                if (!postMessageLogged) {
+                    this.logKiller(post.$message, id);
+                    postMessageLogged = true;
+                }
+
+                if (!val)
+                    return;
+                
+                this._nodes.message.innerText = val ?? "MESSAGE";
+            });
+
+            let $commentsLogged = false;
+            post.$comments.subscribe((val, id) => {
+                if (!$commentsLogged) {
+                    this.logKiller(post.$comments, id);
+                    $commentsLogged = true;
+                }
+
+                this.emptyComments();
+                if (!APP._isDefined(val))
+                    return;
+
+                for (const comment of val) {
+                    if (!comment)
+                        return;
+
+                    const node = document.createElement("div");
+                    node.classList.add("comment");
+                    node.innerHTML = `
+                        <div class="pic color">
+                            <img src="" alt="profile pic">
+                            <div class="filler" style="--color: white"></div>
+                        </div>
+                        <div class="name">
+                            <p>John Doe</p>
+                            <p class="edited">
+                                <span datetime="0">just now</span>
+                                <span datetime="0">just now</span>
+                            </p>
+                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ad, non?</p>
+                        </div>
+                    `;
+
+                    const divPic = get(node, "div.pic");
+                    const divPicImg = get(divPic, "img");
+                    const divPicFiller = get(divPic, "div.filler");
+                    const pName = get(node, "div.name > p:first-of-type");
+
+                    let urlLogged = false;
+                    comment.author.$url.subscribe((url, id) => {
+                        if (!urlLogged) {
+                            this.logKiller(comment.author.$url, id);
+                            urlLogged = true;
+                        }
+                        if (APP._isDefined(url)) {
+                            divPicImg.src = url;
+                            divPic.classList.remove("color");
+                        } else
+                            divPic.classList.add("color");
+                    });
+
+                    let colorLogged = false;
+                    comment.author.$color.subscribe((color, id) => {
+                        if (!colorLogged) {
+                            this.logKiller(comment.author.$color, id);
+                            colorLogged = true;
+                        }
+                        divPicFiller.setAttribute("style", `--color: ${color}`);
+                    });
+
+                    let nameLogged = false;
+                    comment.author.$name.subscribe((name, id) => {
+                        if (!nameLogged) {
+                            this.logKiller(comment.author.$name, id);
+                            nameLogged = true;
+                        }
+                        pName.innerText = name;
+                    });
+
+                    let [created, updated] = [0, 0];
+                    const pTime = get(node, "div.name > p:nth-of-type(2)");
+                    const pTimeCreated = get(pTime, "span:first-of-type");
+                    const pTimeUpdated = get(pTime, "span:last-of-type");
+                    const updateTimeUI = () => {
+                        pTime.classList[created === updated ? "remove" : "add"]("edited");
+                        pTimeCreated.setAttribute("datetime", created);
+                        pTimeUpdated.setAttribute("datetime", updated);
+                        timeago.render([pTimeCreated, pTimeUpdated], 'zn_US');
+                    }
+                    updateTimeUI();
+
+                    let createdLogged = false;
+                    comment.$created.subscribe((stamp, id) => {
+                        if (!createdLogged) {
+                            this.logKiller(comment.$created, id);
+                            createdLogged = true;
+                        }
+
+                        if (!APP._isDefined(stamp))
+                            return;
+                        
+                        created = stamp;
+                        updateTimeUI();
+                    });
+
+                    let updatedLogged = false;
+                    comment.$updated.subscribe((stamp, id) => {
+                        if (!updatedLogged) {
+                            this.logKiller(comment.$updated, id);
+                            updatedLogged = true;
+                        }
+
+                        if (!APP._isDefined(stamp))
+                            return;
+                        
+                        updated = stamp;
+                        updateTimeUI();
+                    });
+                    
+                    const pContent = get(node, "div.name > p:last-of-type");
+                    let messageLogged = false;
+                    comment.$message.subscribe((msg, id) => {
+                        if (!messageLogged) {
+                            this.logKiller(comment.$message, id);
+                            messageLogged = true;
+                        }
+
+                        pContent.innerText = msg ?? "[DEFAULT: NO MESSAGE]";
+                    });
+                    
+                    this._nodes.commentsBox.prepend(node);
+                }
+            });
+        }
+
+        /**
+         * Closes the editor
+         * @returns {void} Nothing
+         */
+        close() {
+            this._toggle();
         }
 
     }();
@@ -533,9 +844,7 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
         let editable = false;
         const divButtons = get(node, "div.action > div.buttons");
         const divButtonsComment = get(divButtons, "button:not(.edit-btn)");
-        divButtonsComment.addEventListener('click', () => {
-            // TODO: open up comments
-        });
+        divButtonsComment.addEventListener('click', () => POST_VIEWER.open(postId));
 
 
         const divPic = get(node, "div.header > div.pic");
@@ -644,4 +953,43 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
     DB.ref("/posts").orderByChild("meta/created")
         .on("child_added", snap => FEED_NODE.appendChild(createPostNode(snap.key)));
 
+    /**
+     * Creates a node for a friend of the current user
+     * @param {string} friendId the id of the friend
+     * @returns {HTMLElement} the node
+     */
+    const createFriendNode = (friendId) => {
+        const node = document.createElement("div");
+        node.innerHTML = `
+            <div class="pic color">
+                <img src="" alt="profile pic">
+                <div class="filler" style="--color: white"></div>
+            </div>
+            <div class="name">
+                <p>NAME</p>
+            </div>
+        `;
+
+        const divPic = get(node, "div.pic");
+        const divPicImg = get(divPic, "img");
+        const divPicFiller = get(divPic, "div.filler");
+        const pName = get(node, "div.name");
+
+        APP.lookupUser(friendId, data => {
+            if (data.url && data.url.length) {
+                divPicImg.src = data.url;
+                divPic.classList.remove("color");
+            } else
+                divPic.classList.add("color");
+    
+            divPicFiller.setAttribute("style", `--color: ${data.color}`);
+            pName.innerText = data.name;
+        });
+
+        return node;
+    }
+
+    // get all friends
+    const FRIEND_NODE = get("main > section.content > div.friends > div.box > div");
+    DB.ref(`/users/${user.uid}/friends`).on('child_added', snap => FRIEND_NODE.appendChild(createFriendNode(snap.key)));
 }, false);

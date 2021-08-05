@@ -10,6 +10,9 @@ body {
   background-position: center;
   background-size: cover;
 }
+body.modal-open {
+  overflow: hidden;
+}
 
 nav {
   background-color: #05668D;
@@ -305,6 +308,90 @@ main > section.content > div.posts > div.feed > div.post > div.action > div.butt
 }
 main > section.content > div.posts > div.feed > div.post > div.action > div.buttons.editable > button.edit-btn {
   display: initial;
+}
+main > section.content > div.friends > div.box {
+  background-color: white;
+  border-radius: 4px;
+}
+main > section.content > div.friends > div.box > h1 {
+  margin: 0;
+  font-weight: normal;
+  font-size: 1.2rem;
+  padding: 16px;
+  border-bottom: 1px solid grey;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+main > section.content > div.friends > div.box > h1 > span:last-of-type {
+  cursor: pointer;
+}
+main > section.content > div.friends > div.box > div {
+  padding: 0px 16px;
+  display: flex;
+  flex-direction: column;
+}
+main > section.content > div.friends > div.box > div > p {
+  display: none;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: grey;
+  padding: 24px 0;
+  margin: 0;
+  text-align: center;
+}
+main > section.content > div.friends > div.box > div > p:only-child {
+  display: initial;
+}
+main > section.content > div.friends > div.box > div > div {
+  display: flex;
+  flex-direction: row;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 16px 0;
+}
+main > section.content > div.friends > div.box > div > div:not(:last-of-type) {
+  border-bottom: 1px solid grey;
+}
+main > section.content > div.friends > div.box > div > div > div.pic {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+main > section.content > div.friends > div.box > div > div > div.pic > img {
+  width: 35px;
+  height: 35px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #02C39A;
+}
+main > section.content > div.friends > div.box > div > div > div.pic > div.filler {
+  --color: white;
+  display: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 2px solid #02C39A;
+  background-color: var(--color);
+}
+main > section.content > div.friends > div.box > div > div > div.pic.color > img {
+  display: none;
+}
+main > section.content > div.friends > div.box > div > div > div.pic.color > div.filler {
+  display: block;
+}
+main > section.content > div.friends > div.box > div > div > div.name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+main > section.content > div.friends > div.box > div > div > div.name > p {
+  margin: 0;
+  font-size: 1.1rem;
 }
 main > section.post-editor {
   position: fixed;
@@ -653,6 +740,183 @@ main > section.gif-searcher > div.content > div.action > button:last-of-type:hov
 }
 main > section.gif-searcher > div.content > div.action > button.continue-btn.hidden {
   display: none;
+}
+main > section.post-viewer {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.4);
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  padding: 24px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+main > section.post-viewer.hidden {
+  display: none;
+}
+main > section.post-viewer > span {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: block;
+  user-select: none;
+  color: white;
+}
+main > section.post-viewer > div.content {
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  width: 100%;
+  max-width: 590px;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+main > section.post-viewer > div.content > h1 {
+  margin: 0;
+  font-weight: normal;
+  padding: 16px;
+  border-bottom: 1px solid grey;
+  font-size: 1.3rem;
+}
+main > section.post-viewer > div.content > p {
+  border-bottom: 1px solid grey;
+  margin: 0;
+  padding: 16px;
+  font-size: 1rem;
+}
+main > section.post-viewer > div.content > form {
+  padding: 16px;
+  border-bottom: 1px solid grey;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 8px;
+}
+main > section.post-viewer > div.content > form > input {
+  flex: 1;
+  outline: none;
+  padding: 8px;
+  font-family: "Open Sans", sans-serif;
+  border-radius: 4px;
+  border: none;
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  color: white;
+  font-size: 0.9rem;
+}
+main > section.post-viewer > div.content > form > input::placeholder {
+  color: lightgray;
+}
+main > section.post-viewer > div.content > form > button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0px;
+  outline: none;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #02C39A;
+}
+main > section.post-viewer > div.content > form > button:hover {
+  color: #05668D;
+}
+main > section.post-viewer > div.content > div.comments {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 0px 16px;
+}
+main > section.post-viewer > div.content > div.comments > p {
+  display: none;
+  font-size: 0.875rem;
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+  padding: 24px 0px;
+  color: grey;
+}
+main > section.post-viewer > div.content > div.comments > p:only-child {
+  display: initial;
+}
+main > section.post-viewer > div.content > div.comments > div {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  box-sizing: border-box;
+  padding: 16px 0px;
+}
+main > section.post-viewer > div.content > div.comments > div:not(:last-of-type) {
+  border-bottom: 1px solid grey;
+}
+main > section.post-viewer > div.content > div.comments > div > div.pic {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+}
+main > section.post-viewer > div.content > div.comments > div > div.pic > img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #02C39A;
+}
+main > section.post-viewer > div.content > div.comments > div > div.pic > div.filler {
+  --color: white;
+  display: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #02C39A;
+  background-color: var(--color);
+}
+main > section.post-viewer > div.content > div.comments > div > div.pic.color > img {
+  display: none;
+}
+main > section.post-viewer > div.content > div.comments > div > div.pic.color > div.filler {
+  display: block;
+}
+main > section.post-viewer > div.content > div.comments > div > div.name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p {
+  margin: 0;
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p:first-of-type {
+  font-size: 1.1rem;
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p:nth-of-type(2) {
+  font-size: 0.875rem;
+  font-style: italic;
+  margin-bottom: 6px;
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p:nth-of-type(2) > span:last-of-type {
+  display: none;
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p:nth-of-type(2) > span:last-of-type::before {
+  content: "[edited ";
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p:nth-of-type(2) > span:last-of-type::after {
+  content: "]";
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p:nth-of-type(2).edited > span:last-of-type {
+  display: initial;
+}
+main > section.post-viewer > div.content > div.comments > div > div.name > p:last-of-type {
+  font-size: 1rem;
 }
 
 /*# sourceMappingURL=style.css.map */
