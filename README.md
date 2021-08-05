@@ -1,6 +1,6 @@
 # Peerfit [team-04]
 ### Project Description 
-> Peerfit is a social media target to **all**
+> Peerfit is a social media target to **all** users.
 > The project currently uses Firebases as the backend 
 > : User Authentification and Real Time Database
 
