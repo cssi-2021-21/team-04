@@ -3,14 +3,12 @@ const friendList = document.querySelector("#friendList");
 
 const updateProfile = (user) => {
   const profileName = document.querySelectorAll(".profileName");
-  const profileDate = document.querySelector("#profileDate");
+
   const dateJoin = document.querySelector("#dateJoin");
   const profileEmail = document.querySelector("#profileEmail");
 
   console.log(user)
   profileName.forEach(e=>e.innerHTML=user.displayName);
-  const date = new Date();
-  profileDate.innerHTML = date.getMonth()+1+"/"+date.getDate()+"/"+date.getFullYear();
   const dateJoinObj = new Date(parseInt(user.metadata.a));
   dateJoin.innerHTML = dateJoinObj.getMonth()+1+"/"+dateJoinObj.getDate()+"/"+dateJoinObj.getFullYear();
   profileEmail.innerHTML = user.email;
@@ -41,6 +39,7 @@ const renderHTML = (data) => {
     let exerciseObj = data[exerciseData];
     console.log(exerciseObj.name);
     //Profile exercise template
+    const workoutDate = new Date(exerciseObj.timestamp);
     domTemplate+=`
       <div class="workout-card">
         <h1> ${exerciseObj.name.charAt(0).toUpperCase() + exerciseObj.name.substr(1).toLowerCase()} </h1>
@@ -52,7 +51,7 @@ const renderHTML = (data) => {
         </svg>
         <h2> ${exerciseObj.duration} minute </h2>
         <h2> ${exerciseObj.calories} calories </h2>
-        <h2> ${new Date(exerciseObj.timestamp)} </h2>
+        <h2> ${workoutDate.getMonth()+1+"/"+workoutDate.getDate()+"/"+workoutDate.getFullYear()+", "+workoutDate.getHours()+":"+workoutDate.getMinutes()} </h2>
         <hr>
         <div>
           <button> Edit </button>

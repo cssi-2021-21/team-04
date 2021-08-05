@@ -1,7 +1,14 @@
 body {
   margin: 0;
   background: #028090;
-  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  background: linear-gradient(135deg, #028090 0%, #00A896 100%);
+  display: grid;
+  grid-template-rows: min-content minmax(max-content, 1fr) min-content;
+  min-height: 100vh;
+  font-family: "Open Sans", sans-serif;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
 }
 
 .chartSection {
@@ -44,70 +51,69 @@ body {
 }
 
 nav {
-  display: flex;
-  margin: 0rem;
-  margin-bottom: 2rem;
-  padding: 1rem;
-  background-color: white;
-  flex-wrap: wrap;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
-  gap: 4rem;
-}
-nav > div {
-  display: flex;
-  padding: 0.25rem;
-  margin: auto;
-}
-nav > div:first-of-type {
-  gap: 1rem;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: nowrap;
-}
-nav > div:first-of-type > img {
-  width: 4rem;
-}
-nav > div:first-of-type > h1 {
-  font-size: 2.5rem;
-  margin: 0;
-  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-nav > div:nth-of-type(2) {
-  align-items: center;
-  justify-content: center;
-  flex: 1;
-  cursor: pointer;
-}
-nav > div:nth-of-type(2) > button {
-  padding: 1rem clamp(10rem, 12rem, 15rem);
-  font-size: 1.5rem;
-  border: none;
-  border-radius: 0.3rem;
-  transition: all ease-out 0.2s;
+  background-color: #05668D;
   color: white;
-  background: #028090;
-  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  padding: 10px 16px;
+  position: sticky;
+  top: 0;
+  left: 0;
 }
-nav > div:nth-of-type(2) > button:hover {
-  transform: translateY(-10%);
-}
-nav > div:last-of-type {
-  flex: 1;
+nav > div.wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
   display: flex;
-  gap: 2rem;
-  cursor: pointer;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 16px;
 }
-nav > div:last-of-type > svg {
+nav > div.wrapper > div.logo {
+  display: flex;
+  box-sizing: border-box;
+  align-items: center;
+  justify-content: flex-start;
   flex: 1;
-  fill: #00A896;
-  transition: all ease-out 0.2s;
 }
-nav > div:last-of-type > svg:hover {
-  fill: #05668D;
-  transform: translateY(-5%);
+nav > div.wrapper > div.logo > a {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  box-sizing: border-box;
+  text-decoration: none;
+  color: white;
+}
+nav > div.wrapper > div.logo > a > img {
+  height: 40px;
+  width: auto;
+}
+nav > div.wrapper > div.logo > a > span {
+  flex: 1;
+  font-size: 1.6rem;
+  white-space: nowrap;
+  text-transform: lowercase;
+}
+nav > div.wrapper > div.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+}
+nav > div.wrapper > div.links > a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  white-space: nowrap;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+  text-transform: lowercase;
+}
+nav > div.wrapper > div.links > a:hover {
+  border-bottom-color: #02C39A;
 }
 
 footer {
@@ -145,7 +151,7 @@ footer > p {
   -webkit-text-fill-color: transparent;
   font-weight: 800;
   margin: 0;
-  font-size: clamp(2rem, 4rem, 4rem);
+  font-size: clamp(2rem, 3rem, 3rem);
 }
 
 .profileSec {
@@ -156,7 +162,7 @@ footer > p {
   margin-top: 4rem;
   border-radius: 0.2rem;
   padding: 4rem 0rem;
-  gap: 2rem;
+  gap: 0.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -187,6 +193,8 @@ footer > p {
 }
 .profileSec > div:first-of-type > div > h2 {
   margin: 0;
+  color: grey;
+  font-size: medium;
 }
 .profileSec > div:first-of-type > div > img {
   border-radius: 1rem;
@@ -388,13 +396,25 @@ footer > p {
   width: clamp(25rem, 90%, 100rem);
   margin: auto;
   background-color: white;
-  box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.329);
-  margin-top: 4rem;
+  margin-top: 1rem;
   border-radius: 0.2rem;
-  padding: 4rem 0rem;
+  padding: 1rem 0rem;
   display: flex;
   flex-direction: column;
   text-align: center;
+}
+.workout > button {
+  background: #028090;
+  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
+  color: white;
+  transition: all ease-out 0.2s;
+  border: none;
+  border-radius: 0.2rem;
+  padding: 2rem 4rem;
+  font-size: 2rem;
+}
+.workout > button:hover {
+  transform: translateY(-10%);
 }
 .workout > h2 {
   font-size: 3rem;
@@ -427,19 +447,6 @@ footer > p {
 }
 .workout > div:last-of-type {
   margin-top: 4rem;
-}
-.workout > div:last-of-type > button {
-  background: #028090;
-  background: linear-gradient(135deg, #028090 0%, #00a896 100%);
-  color: white;
-  transition: all ease-out 0.2s;
-  border: none;
-  border-radius: 0.2rem;
-  padding: 2rem 4rem;
-  font-size: 2rem;
-}
-.workout > div:last-of-type > button:hover {
-  transform: translateY(-10%);
 }
 
 .havePlan {

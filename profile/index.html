@@ -91,7 +91,7 @@
         </div>
     </section>
 
-    <nav>
+    <!-- <nav>
         <div>
             <img src="assets/Real_Logo.png" alt="" srcset="">
             <h1> Peer-fit</h1>
@@ -119,13 +119,27 @@
                 <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
             </svg>
         </div>
+    </nav> -->
+    <nav>
+        <div class="wrapper">
+            <div class="logo">
+                <a href="../">
+                    <img src="./assets/logo.svg" alt="logo">
+                    <span>peer-fit</span>
+                </a>
+            </div>
+            <div class="links">
+                <a href="../profile/">profile</a>
+                <a href="../posts/">posts</a>
+                <a href="../sign-out/">sign-out</a>
+            </div>
+        </div>
     </nav>
 
     <div class="welcomeMsg animate__animated animate__rubberBand">
         <h1> Welcome Back <span class="profileName">{ Name }</span>!</h1>
-        <h1> <span id="profileDate">{ Date }</span> </h1>
     </div>
-
+    
     <section class="profileSec">
         <div>
             <div>
@@ -133,14 +147,14 @@
             </div>
             <div>
                 <h1> <span class="profileName">{ Name }</span> </h1>
-                <h2> <span id="dateJoin">{ Date Join }</span> </h2>
-                <h2> <span id="profileEmail">{ Email }</span> </h2>
+                <h2 class="secondary"> <span id="dateJoin">{ Date Join }</span> </h2>
+                <h2 class="secondary"> <span id="profileEmail">{ Email }</span> </h2>
             </div>
             <div>
                 <button id="deleteAcc"> Add Friend </button>
             </div>
         </div>
-        <hr>
+        <!-- <hr>
         <div>
             <h1> Recent Post</h1>
             <div class="post">
@@ -184,10 +198,39 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <hr>
+        <section class="workout">
+            <h2> Your Workouts</h2>
+            <br>
+            <button id="addWorkout"> Add Work out</button>
+            <div>
+                <div id="noPlan" class="noPlan">
+                    <h1> Sorry, Currently you have no plan</h1>
+                </div>
+                <div id="havePlan" class="havePlan">
+                    <div class="workout-card">
+                        <h1> { Workout Name } </h1>
+                        <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 7C16.1046 7 17 6.10457 17 5C17 3.89543 16.1046 3 15 3C13.8954 3 13 3.89543 13 5C13 6.10457 13.8954 7 15 7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12.6133 8.26691L9.30505 12.4021L13.4403 16.5374L11.3727 21.0861" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M6.4104 9.5075L9.79728 6.19931L12.6132 8.26692L15.508 11.5752H19.2297" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M8.89152 15.7103L7.65095 16.5374H4.34277" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <h2> { Workout Duration } minutes</h2>
+                        <h2> { Calories Burnt }</h2>
+                        <hr>
+                        <div>
+                            <button> Edit </button>
+                            <button> Delete </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr>
+        </section>
         <div>
-            <h1> Friend Lists </h1>
+            <h1> Friend List </h1>
             <div id="friendList">
                 <div class="friends">
                     <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
@@ -201,38 +244,7 @@
         </div>
     </section>
 
-    <section class="workout">
-        <h2> Workout Tracker</h2>
-        <hr>
-        <div>
-            <h1> Current Plan</h1>
-            <div id="noPlan" class="noPlan">
-                <h1> Sorry, Currently you have no plan</h1>
-            </div>
-            <div id="havePlan" class="havePlan">
-                <div class="workout-card">
-                    <h1> { Workout Name } </h1>
-                    <svg width="64px" height="64px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M15 7C16.1046 7 17 6.10457 17 5C17 3.89543 16.1046 3 15 3C13.8954 3 13 3.89543 13 5C13 6.10457 13.8954 7 15 7Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M12.6133 8.26691L9.30505 12.4021L13.4403 16.5374L11.3727 21.0861" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M6.4104 9.5075L9.79728 6.19931L12.6132 8.26692L15.508 11.5752H19.2297" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M8.89152 15.7103L7.65095 16.5374H4.34277" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                    <h2> { Workout Duration } minutes</h2>
-                    <h2> { Calories Burnt }</h2>
-                    <hr>
-                    <div>
-                        <button> Edit </button>
-                        <button> Delete </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div>
-            <button id="addWorkout"> Add Work out</button>
-        </div>
-    </section>
+    
 
     <!-- <div class="section">
         <h2>Workouts</h2>
