@@ -649,7 +649,7 @@ const APP = new class {
                         }
 
                         payload["gif"] = gif;
-                    }
+                    } else payload["gif"] = null;
                     REF.update(payload, err => {
                         if (err) {
                             if (onFail)

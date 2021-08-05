@@ -198,24 +198,12 @@ const APP = new class {
     }
 
     /**
-     * Checks if the passed in value is not null or undefined.
-     * @param {*} val the value to check
-     * @returns {boolean} false if value is null or undefined
-     */
-    _isDefined(val) {
-        return val !== null && val !== undefined;
-    } 
-
-    /**
      * Registers a target that listeners can subscribe to
      * @param {string} name the id of the target
      * @param {(callListeners: (...params: any[]) => void) => void} registerFunc a callback that uses the passed callListeners function
      * @returns {void} Nothing
      */
     registerListenerTarget(name, registerFunc) {
-        if (!this._isDefined(name) || !this._isDefined(registerFunc))
-            return;
-
         const LISTENERS = this._listeners[name] ?? [[undefined]];
         this._listeners[name] = LISTENERS;
 
@@ -236,9 +224,6 @@ const APP = new class {
      * @returns {void} Nothing
      */
     registerListener(target, callback, callImmediately = true) {
-        if (!this._isDefined(target) || !this._isDefined(callback))
-            return;
-
         const listener = {
             func: callback,
             dead: false,
@@ -262,9 +247,6 @@ const APP = new class {
      * @returns {void} Nothing
      */
     killListener(id) {
-        if (!this._isDefined(id))
-            return;
-
         const [target, index] = id.split('-');
         if (
             !target || 
@@ -290,9 +272,6 @@ const APP = new class {
      * } | null} the user's personal information
      */
     lookupUser(uid, callbackOnUpdate) {
-        if (!this._isDefined(uid))
-            return null;
-
         const getUser = () => this._values.users[uid] || null;
         if (callbackOnUpdate)
             this.registerListener(DEFAULT_TARGETS.publicUsers,
@@ -315,22 +294,9 @@ const APP = new class {
             return;
         }
 
-        if (!this._isDefined(uid)) {
-            if (onFail)
-                onFail(new Error("You need the person's UID to add them."));
-            return;
-        } 
-
-        const myUid = this.user.uid;
-        if (myUid === uid) {
-            if (onFail)
-                onFail(new Error("Cannot add yourself as a friend."));
-            return;
-        }
-
         DB.ref().update({
-            [`/users/${myUid}/friends/${uid}`]: true,
-            [`/users/${uid}/friends/${myUid}`]: true
+            [`/users/${this.user.uid}/friends/${uid}`]: true,
+            [`/users/${uid}/friends/${this.user.uid}`]: true
         }, err => {
             if (err) {
                 if (onFail)
@@ -355,12 +321,6 @@ const APP = new class {
                 onFail(new Error("Cannot remove friend because the current user is not logged in."));
             return;
         }
-
-        if (!this._isDefined(uid)) {
-            if (onFail)
-                onFail(new Error("You need the person's UID to add them."));
-            return;
-        } 
 
         DB.ref().update({
             [`/users/${this.user.uid}/friends/${uid}`]: null,
@@ -391,12 +351,6 @@ const APP = new class {
                 onFail(new Error("Cannot log workout because the current user is not logged in."));
             return;
         }
-
-        if (!this._isDefined(name) || !this._isDefined(duration) || !this._isDefined(calories)) {
-            if (onFail)
-                onFail(new Error("Invalid workout data passed."));
-            return;
-        } 
 
         const root = DB.ref(`/users/${this.user.uid}/workouts`);
         const id = root.push().key;
@@ -430,12 +384,6 @@ const APP = new class {
                 onFail(new Error("Cannot delete workout because the current user is not logged in."));
             return;
         }
-
-        if (!this._isDefined(workoutId)) {
-            if (onFail)
-                onFail(new Error("Invalid workout ID passed."));
-            return;
-        } 
         
         DB.ref(`/users/${this.user.uid}/workouts`).update({
             [workoutId]: null
@@ -465,12 +413,6 @@ const APP = new class {
         if (!this.isLoggedIn) {
             if (onFail)
                 onFail(new Error("Cannot change user info because the current user is not logged in."));
-            return;
-        }
-
-        if (!this._isDefined(data)) {
-            if (onFail)
-                onFail(new Error("Invalid new user data passed."));
             return;
         }
 
@@ -593,12 +535,6 @@ const APP = new class {
                 onFail(new Error("Cannot edit post because the current user is not logged in."));
             return;
         }
-
-        if (!this._isDefined(postId)) {
-            if (onFail)
-                onFail(new Error("Post ID is not valid."));
-            return;
-        }
         
         const REF = DB.ref(`/posts/${postId}`);
         REF.once('value')
@@ -680,12 +616,6 @@ const APP = new class {
                 onFail(new Error("Cannot create comment to post because the current user is not logged in."));
             return;
         }
-
-        if (!this._isDefined(postId) || !this._isDefined(message)) {
-            if (onFail)
-                onFail(new Error("Invalid comment data passed."));
-            return;
-        }
         
         DB.ref(`/posts/${postId}`).once('value')
             .then(snap => snap.val())
@@ -747,12 +677,6 @@ const APP = new class {
             return;
         }
 
-        if (!this._isDefined(commentId) || !this._isDefined(message)) {
-            if (onFail)
-                onFail(new Error("Invalid comment data passed."));
-            return;
-        }
-
         const ref = DB.ref(`/comments/${commentId}`);
         ref.once('value')
             .then(snap => snap.val())
@@ -807,12 +731,6 @@ const APP = new class {
                 onFail(new Error("Cannot like post because the current user is not logged in."));
             return;
         }
-
-        if (!this._isDefined(postId)) {
-            if (onFail)
-                onFail(new Error("Invalid post ID passed."));
-            return;
-        }
         
         const ref = DB.ref(`/posts/${postId}`);
         ref.once('value')
@@ -855,12 +773,6 @@ const APP = new class {
             return;
         }
         
-        if (!this._isDefined(postId)) {
-            if (onFail)
-                onFail(new Error("Invalid post ID passed."));
-            return;
-        }
-
         const ref = DB.ref(`/posts/${postId}`);
         ref.once('value')
             .then(snap => snap.val())
@@ -894,12 +806,6 @@ const APP = new class {
      * @param {string} postId the id of the post to fetch
      */
     getPost(postId) {
-        if (!this._isDefined(postId)) {
-            if (onFail)
-                onFail(new Error("Invalid post ID passed."));
-            return;
-        }
-        
         const THIS = this;
 
         /** @type {BehaviorSubject<{ id: string, name: string, color: string, url: string | null }>} */

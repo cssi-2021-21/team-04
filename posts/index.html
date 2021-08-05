@@ -5,326 +5,60 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Posts </title>
+    <title>peer-fit | page-skeleton</title>
+    <link rel="shortcut icon" href="./assets/logo-png-small.png" type="image/x-icon">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./lib/css/style.css">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/timeago.js/4.0.2/timeago.min.js" integrity="sha512-SVDh1zH5N9ChofSlNAK43lcNS7lWze6DTVx1JCXH1Tmno+0/1jMpdbR8YDgDUfcUrPp1xyE53G42GFrcM0CMVg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
     <script defer src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script>
     <script defer src="https://www.gstatic.com/firebasejs/8.8.1/firebase-auth.js"></script>
-    
-    <script defer src="./lib/js/main.js"></script>
+
     <script defer src="./lib/js/app.js"></script>
-    <script defer src="./lib/js/readPosts.js"></script>
+    <script defer src="./lib/js/main.js"></script>
 </head>
 
 <body>
-    <!-- Modal -->
-    <section class="modal" id="modal">
-        <div class="modalBackground">
-            <div class="phoneAlert" id="phoneAlert">
-                <h1> Warning !</h1>
-                <div></div>
-                <p> Lorem ipsum dolor sit amet, consectetur adipisicing elit. Doloribus accusamus beatae magni officiis laudantium, 
-                    placeat odit distinctio provident minus quia, exercitationem dolores voluptatem modi inventore. Nam, porro. Sed, repellendus nisi.
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Laudantium reprehenderit, minus, facere commodi est, 
-                    iure quos consequuntur sit unde quia perspiciatis dolores eveniet? Ex aliquam, nemo mollitia aut facilis nihil.
-                </p>
-                <div></div>
-                <button class="closeAlert"> Okay </button>
-            </div>
-            <div class="postCreation">
-                <h1> Create your post! </h1>
-                <hr>
-                <!-- text post -->
-                <textarea id="postText" placeholder="Enter your post text"></textarea>
-                <!-- gif search -->
-                <div class="gifSearch">
-                    <button id="gifyButton">Add a gif to your post?</button>
-                </div>
-                <div id="gify" class="hidden">
-                    <input type="text" name="" id="gifySearch" placeholder="What would you like to search for?"><button id="submitGifySearch">Search</button>
-                    <div id="gifySelectionContainer"></div>
-                    <div class="postImage">
-                        <input type="text" name="" disabled id="gifyUrl" placeholder="Selected GIF link will show up here">
-                    </div>
-                </div>
-                <div class="postImage">
-                    <input type="text" name="" id="postImage" placeholder="Would you like to add an image?">
-                </div>
-                <!-- checkbox for public/private -->
-                <div class="pubOrPri"> 
-                    <p>Would you like your post to be private? <input type="checkbox" name="" id="pubpri" class="pubpri"></p>
-                </div>
-                <hr>
-                <div class="closeDiv">
-                    <button class="closeAlert"> Submit </button>
-                    <button class="closeAlert"> Cancel </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Not doing this lmao-->
     <nav>
-        <div>
-            <img src="assets/Real_Logo.png" alt="" srcset="">
-            <h1> Peer-fit</h1>
-        </div>
-        <div>
-            <button id="NewPost"> New Post </button>
-        </div>
-        <div>
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-chat-dots-fill" viewBox="0 0 16 16">
-                <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-                <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-award-fill" viewBox="0 0 16 16">
-                <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
-                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
-            </svg>
-
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293l6-6zm5-.793V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
-                <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
-            </svg>
+        <div class="wrapper">
+            <div class="logo">
+                <a href="../">
+                    <img src="./assets/logo.svg" alt="logo">
+                    <span>peer-fit</span>
+                </a>
+            </div>
+            <div class="links">
+                <a href="../profile/">profile</a>
+                <a href="../posts/">posts</a>
+                <a href="../sign-out/">sign-out</a>
+            </div>
         </div>
     </nav>
-    <main class="main">
-        <!-- Remove the user section and put it in nav-->
-        <div class="postSection">
-            <!--  This is useless rn
-            <div class="user">
-                <button> New Post</button>
-            </div> -->
-            <div class="post">
-                <div class="poster">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                    <div>
-                        <h1> { Name } </h1>
-                        <p> { Date }</p>
-                    </div>
+    <main>
+        <section class="content">
+           <div class="posts">
+                <div class="editor">
+                    <button>create-a-post</button>
                 </div>
-                <div class="postTitle">
-                    <h1> The Orphan Destroyer </h1>
-                    <hr>
-                </div>
-                <div class="postWord">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum reiciendis illum iste eligendi expedita tempore ea vel officiis eius consectetur saepe, incidunt voluptatem suscipit, optio repellendus iusto similique tenetur eveniet.
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur cumque corrupti, quo et nostrum doloribus possimus dolores. Vero sequi atque temporibus eligendi consequatur, doloribus hic praesentium cumque, quos reprehenderit nam!
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid deleniti voluptates odio repellendus. Illum sunt praesentium nemo. Officiis facilis porro adipisci. Laudantium officia, libero tenetur omnis est tempore aliquid architecto!
-                </div>
-
-                <div class="post_ImgLeft">
-                    <div>
-                        <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                    </div>
-                    <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum reiciendis illum iste eligendi expedita tempore ea vel officiis eius consectetur saepe, incidunt voluptatem suscipit, optio repellendus iusto similique tenetur eveniet.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur cumque corrupti, quo et nostrum doloribus possimus dolores. Vero sequi atque temporibus eligendi consequatur, doloribus hic praesentium cumque, quos reprehenderit nam!
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid deleniti voluptates odio repellendus. Illum sunt praesentium nemo. Officiis facilis porro adipisci. Laudantium officia, libero tenetur omnis est tempore aliquid architecto!
-                    </div>
-                </div>
-
-                <div class="post_ImgRight">
-                    <div>
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum reiciendis illum iste eligendi expedita tempore ea vel officiis eius consectetur saepe, incidunt voluptatem suscipit, optio repellendus iusto similique tenetur eveniet.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur cumque corrupti, quo et nostrum doloribus possimus dolores. Vero sequi atque temporibus eligendi consequatur, doloribus hic praesentium cumque, quos reprehenderit nam!
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquid deleniti voluptates odio repellendus. Illum sunt praesentium nemo. Officiis facilis porro adipisci. Laudantium officia, libero tenetur omnis est tempore aliquid architecto!
-                    </div>
-                    
-                    <div>
-                        <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                    </div>
-                </div>
-            </div>
-
-            <div class="post">
-                <div class="poster">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                    <h1> { Name } </h1>
-                </div>
-                <div class="postTitle">
-                    <h1> The Orphan Destroyer </h1>
-                    <hr>
-                </div>
-                
-                <div class="postImg">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg">
-                </div>
-            </div>
-        </div>
-        <!-- Onresize let's remove the friends-->
-        <!-- On second thought. Let's make it sticky: 8/2-->
-        <div class="contacts" id="contacts">
-            <section>
-                <h1> Contacts </h1>
-                <hr class="contactHR">
-                <div class="friends">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-                <div class="friends">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-                <div class="friends">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-                <div class="friends">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-            </section>
-
-            <section>
-                <h1> People you might know </h1>
-                <hr class="contactHR">
-                <div class="friends unknown">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-                <div class="friends unknown">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-                <div class="friends unknown">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-                <div class="friends unknown">
-                    <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
-                    <div>
-                        <h2> { Name } </h2>
-                        <hr>
-                        <p> Hello </p>
-                    </div>
-                </div>
-            </section>
-        </div>
+                <div class="feed"></div>
+           </div>
+           <div class="friends">
+               <div>friends</div>
+           </div>
+        </section>
+        <section class="post-editor hidden"></section>
+        <section class="gif-searcher hidden"></section>
     </main>
-
     <footer>
         <p>&copy; Copyright 2021, Peer-fit. All rights reserved.</p>
     </footer>
-
-    <!-- Fixed Contacts -->
-    <section class="contactsFixed" id="contactsFixed">
-        <section>
-            <h1> Contacts </h1>
-            <hr class="contactHR">
-            <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-            <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-            <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-            <div class="friends">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <h1> People you might know </h1>
-            <hr class="contactHR">
-            <div class="friends unknown">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-            <div class="friends unknown">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-            <div class="friends unknown">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="offline">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-            <div class="friends unknown">
-                <img src="https://randomuser.me/api/portraits/men/11.jpg" class="online">
-                <div>
-                    <h2> { Name } </h2>
-                    <hr>
-                    <p> Hello </p>
-                </div>
-            </div>
-        </section>
-    </section>
-
-    <div class="contactsBtn" id="contactsBtn">
-        <svg  xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
-        </svg>
-    </div>
 </body>
 
 </html>
