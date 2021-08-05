@@ -206,7 +206,12 @@ footer > div > div {
 }
 footer > div > div > img {
   border-radius: 0.1rem;
-  border: solid 2px #02C39A;
+  width: clamp(5rem, 10rem, 20rem);
+  height: clamp(5rem, 10rem, 20rem);
+}
+footer > div > div .tenor-gif-embed {
+  border-radius: 0.1rem;
+  width: clamp(5rem, 10rem, 20rem);
 }
 footer > div > div > div > div {
   display: flex;
@@ -219,6 +224,8 @@ footer > div > div > div > div > svg {
 }
 footer > div > div > div > div > svg:hover {
   transform: translateY(-10%);
+  fill: #00A896;
+  filter: brightness(125%);
 }
 
 .YangfaSpecialTag {
