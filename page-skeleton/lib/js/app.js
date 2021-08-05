@@ -463,6 +463,7 @@ const APP = new class {
                             onSuccess();
                     });
                 else {
+                    const payload = { }
                     if (data.name) {
                         const name = `${data.name}`.trim();
                         if (!name) {
