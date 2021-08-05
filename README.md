@@ -16,4 +16,4 @@
 * Hou Chi Chan
 
 #### Project duration
-8/2 - 8/5
+7/30 - 8/5
