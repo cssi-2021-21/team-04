@@ -92,22 +92,181 @@ footer > p {
 }
 
 main {
-  margin: 24px;
+  margin: 32px;
 }
 main > section.content {
   margin: auto;
-  max-width: 1000px;
+  max-width: 900px;
   width: 100%;
   box-sizing: border-box;
   display: grid;
   grid-template-columns: 2fr 1fr;
-  gap: 16px;
+  gap: 24px;
 }
 main > section.content > div.posts {
-  background-color: #00A896;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
 }
-main > section.content > div.friends {
-  background-color: blue;
+main > section.content > div.posts > div.editor {
+  min-height: 300px;
+  background-color: white;
+}
+main > section.content > div.posts > div.feed {
+  display: flex;
+  flex-flow: column-reverse;
+  gap: 24px;
+  justify-content: flex-end;
+}
+main > section.content > div.posts > div.feed > div.post {
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+main > section.content > div.posts > div.feed > div.post > div.header {
+  padding: 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  border-bottom: 1px solid grey;
+  box-sizing: border-box;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.pic {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.pic > img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #02C39A;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.pic > div.filler {
+  --color: white;
+  display: none;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 2px solid #02C39A;
+  background-color: var(--color);
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.pic.color > img {
+  display: none;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.pic.color > div.filler {
+  display: block;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.name {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.name > p {
+  margin: 0;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.name > p:first-of-type {
+  font-size: 1.1rem;
+}
+main > section.content > div.posts > div.feed > div.post > div.header > div.name > p:last-of-type {
+  font-size: 0.875rem;
+  font-style: italic;
+}
+main > section.content > div.posts > div.feed > div.post > div.content {
+  padding: 16px;
+  border-bottom: 1px solid grey;
+  box-sizing: border-box;
+}
+main > section.content > div.posts > div.feed > div.post > div.content > p {
+  margin: 0;
+}
+main > section.content > div.posts > div.feed > div.post > div.content > img {
+  margin-top: 16px;
+  width: 100%;
+  height: auto;
+  image-rendering: crisp-edges;
+  border-radius: 4px;
+}
+main > section.content > div.posts > div.feed > div.post > div.content.no-image > img {
+  display: none;
+}
+main > section.content > div.posts > div.feed > div.post > div.action {
+  padding: 16px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div > span:not(:last-of-type) {
+  color: #02C39A;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div > span.material-icons-outlined {
+  display: none;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div:hover > span.material-icons {
+  display: none;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div:hover > span.material-icons-outlined {
+  display: initial;
+  color: #05668D;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div.likable > span.material-icons {
+  display: none;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div.likable > span.material-icons-outlined {
+  display: initial;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div.likable:hover > span.material-icons {
+  display: initial;
+  color: #05668D;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.likes > div.likable:hover > span.material-icons-outlined {
+  display: none;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.buttons {
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 16px;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.buttons > button {
+  background-color: transparent;
+  border: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 1rem;
+  cursor: pointer;
+  border-top: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.2s;
+  padding: 0px;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.buttons > button:hover {
+  border-bottom-color: #02C39A;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.buttons > button.edit-btn {
+  display: none;
+}
+main > section.content > div.posts > div.feed > div.post > div.action > div.buttons.editable > button.edit-btn {
+  display: initial;
 }
 
 /*# sourceMappingURL=style.css.map */
