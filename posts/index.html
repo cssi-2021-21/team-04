@@ -41,11 +41,14 @@
                 <textarea id="postText" placeholder="Enter your post text"></textarea>
                 <!-- gif search -->
                 <div class="gifSearch">
-                    <button>Add a gif to your post?</button>
+                    <button id="gifyButton">Add a gif to your post?</button>
                 </div>
-                <div id="gify" style="display:none">
-                    <input type="text" name="" id="gifySearch" placeholder="What would you like to search for?">
+                <div id="gify" class="hidden">
+                    <input type="text" name="" id="gifySearch" placeholder="What would you like to search for?"><button id="submitGifySearch">Search</button>
                     <div id="gifySelectionContainer"></div>
+                    <div class="postImage">
+                        <input type="text" name="" disabled id="gifyUrl" placeholder="Selected GIF link will show up here">
+                    </div>
                 </div>
                 <div class="postImage">
                     <input type="text" name="" id="postImage" placeholder="Would you like to add an image?">

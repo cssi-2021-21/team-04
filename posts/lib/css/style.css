@@ -516,4 +516,20 @@ footer > p {
   padding: 2rem;
 }
 
+.hidden {
+  display: none;
+}
+
+.selected {
+  border: #00A896 solid 5px;
+}
+
+.gifyImage {
+  max-width: 50px;
+}
+
+.gifyImage:hover {
+  max-width: 60px;
+}
+
 /*# sourceMappingURL=style.css.map */

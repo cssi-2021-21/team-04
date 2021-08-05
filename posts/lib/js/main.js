@@ -103,3 +103,32 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 }
 
 //#endregion
+document.querySelector("#gifyButton").addEventListener("click",(e)=>{
+    document.querySelector("#gify").classList.toggle("hidden");
+})
+const queryField = document.querySelector("#gifySearch");
+const gifySelectionContainer = document.querySelector("#gifySelectionContainer");
+document.querySelector("#submitGifySearch").addEventListener("click", (e) => {
+    let myKey = 'aov2JJZ0OuN558jFjNBJlgDG7zLF7x4l';
+    let topic = encodeURIComponent(queryField.value);
+    console.log(topic);
+    
+    let myQuery = `https://api.giphy.com/v1/gifs/search?api_key=${myKey}&q=${topic}&limit=10`;
+    console.log(myQuery);
+    
+    fetch(myQuery).then(response => response.json()).then(myjson => { 
+        gifySelectionContainer.innerHTML = "";
+        for (let i = 0; i < 9; i++) {
+            let img = document.createElement("img");
+            img.classList.add("gifyImage");
+            img.src = myjson.data[i].images.original.url
+            gifySelectionContainer.appendChild(img);
+            img.addEventListener("click", (e)=>{
+                document.querySelector("#gifyUrl").value=e.target.src;
+                document.querySelectorAll(".selected").forEach(el=>el.classList.remove("selected"));
+                e.target.classList.add("selected");
+            })
+        }
+        queryField.value = "";
+    })
+})
