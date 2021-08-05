@@ -179,17 +179,19 @@ addWorkoutBtn.addEventListener('click', () => {
 const saveWorkout = document.querySelector("#submitExercise");
 const discardWorkout = document.querySelector("#discardExercise");
 
-saveWorkout.addEventListener('click', e => {
-    hideWorkoutModal();
-})
 
 discardWorkout.addEventListener('click', e => {
     hideWorkoutModal();
+    exercise.value = "";
+    duration.value = "";
 })
 
 const hideWorkoutModal = () => {
+    exercise.value = "";
+    duration.value = "";
     modal.style.display = "none"
     workoutModal.style.display = "none"
 }
+
 //#endregion
 
