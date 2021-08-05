@@ -26,6 +26,10 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
 
+    <!-- AoS CDN -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <script defer src="./lib/js/app.js"></script>
     <script defer src="./lib/js/main.js"></script>
 </head>
@@ -67,7 +71,7 @@
     
     <nav>
         <div>
-            <a href="#"> About us </a>
+            <a href="#about-us"> About us </a>
         </div>
         <div> 
             <a href="#footer"> Developers </a>
@@ -79,6 +83,51 @@
             <div>
                 <h1 class="animate__animated animate__bounceInDown animate__fast"> Peer - fit </h1>
                 <img class="animate__animated animate__bounceInUp animate_slow" src="assets/Real_Logo.png" alt="" srcset="">
+            </div>
+        </section>
+
+        <section class="sec2">
+            <div>
+                <h1> We're here to help you guys! </h1>
+            </div>
+        </section>
+
+        <!-- Three Card Thing-->
+        <section class="sec3" id="about-us">
+            <div>
+               <div data-aos="flip-left">
+                    <h1> Socialize </h1>
+                    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit eaque corrupti quia cum est inventore! Dolore suscipit ut repellat, atque at ea magni, aspernatur molestias blanditiis repellendus ipsum. Possimus, in.</h3>
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="" srcset="">
+                </div>
+
+                <div data-aos="flip-up" data-aos-delay="300">
+                    <h1> Exercise </h1>
+                    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit eaque corrupti quia cum est inventore! Dolore suscipit ut repellat, atque at ea magni, aspernatur molestias blanditiis repellendus ipsum. Possimus, in.</h3>
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="" srcset="">
+                </div>
+
+                <div data-aos="flip-right">
+                    <h1> Organize </h1>
+                    <h3>Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit eaque corrupti quia cum est inventore! Dolore suscipit ut repellat, atque at ea magni, aspernatur molestias blanditiis repellendus ipsum. Possimus, in.</h3>
+                    <img src="https://randomuser.me/api/portraits/men/11.jpg" alt="" srcset="">
+                </div> 
+            </div>
+            <div>
+                <a> And much more!! </a>
+            </div>
+        </section>
+
+        <!-- Join Us with Sign Up / create account BTN-->
+        <section class="sec4">
+            <h1> Join us today! </h1>
+            <div>
+                <div>
+                    <button onclick="relocate('../index.html')"> Sign Up</button>
+                </div>
+                <div>
+                    <button onclick="relocate('../index.html')"> Log in</button>
+                </div>
             </div>
         </section>
     </main>
