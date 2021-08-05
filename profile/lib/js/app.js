@@ -418,6 +418,83 @@ const APP = new class {
     }
 
     /**
+     * Edits a current workout using the current user's credentials.
+     * @param {string} workoutId the id of the workout to edit
+     * @param {{
+     *  name?: string, 
+     *  duration?: number, 
+     *  calories?: number
+     * } | null} data the new data of the workout (Setting this to null will delete the workout.)
+     * @param {() => any} [onSuccess] the callback to run when operation is successful
+     * @param {(error: Error) => any} [onFail] the callback to run when operation is NOT successful
+     * @returns {void} Nothing
+     */
+    editWorkout(workoutId, data, onSuccess, onFail) {
+        if (!this.isLoggedIn) {
+            if (onFail)
+                onFail(new Error("Cannot edit workout because the current user is not logged in."));
+            return;
+        }
+
+        if (!this._isDefined(workoutId) || !this._isDefined(data)) {
+            if (onFail)
+                onFail(new Error("invalid workout information passed."));
+            return;
+        }
+        
+        const REF = DB.ref(`/users/${this.user.uid}/workouts/${workoutId}`);
+        REF.once('value')
+            .then(snap => snap.val())
+            .then(val => {
+                if (!val) {
+                    if (onFail)
+                        onFail(new Error("Workout does not exist."));
+                    return;
+                }
+
+                if (!data)
+                    REF.set(null, err => {
+                        if (err) {
+                            if (onFail)
+                                onFail(new Error("Failed to delete the post: " + err.message));
+                            return;
+                        }
+                        if (onSuccess)
+                            onSuccess();
+                    });
+                else {
+                    if (data.name) {
+                        const name = `${data.name}`.trim();
+                        if (!name) {
+                            if (onFail)
+                                onFail(new Error("Workout name cannot be an empty string."));
+                            return;
+                        }
+
+                        payload["name"] = name;
+                    }
+                    if (this._isDefined(data.duration))
+                        payload["duration"] = data.duration + 0;
+                    if (this._isDefined(data.calories))
+                        payload["calories"] = data.calories + 0;
+                    REF.update(payload, err => {
+                        if (err) {
+                            if (onFail)
+                                onFail(new Error("Failed to update the workout: " + err.message));
+                            return;
+                        }
+                        if (onSuccess)
+                            onSuccess();
+                    });
+                }
+            })
+            .catch(err => {
+                if (err && onFail)
+                    onFail(new Error(err.message));
+            });
+    }
+
+    /**
      * Deletes a workout from the user's account by id
      * @param {string} workoutId the id of the workout to delete
      * @param {() => any} [onSuccess] the callback to run when operation is successful
