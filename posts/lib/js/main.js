@@ -159,7 +159,6 @@ APP.registerListener(DEFAULT_TARGETS.user, (id, user) => {
                 node.classList.add("selected");
             }
         }
-
         /**
          * Empties the results and adds in a placeholder message.
          * @returns {void} Nothing

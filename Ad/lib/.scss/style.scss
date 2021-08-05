@@ -216,7 +216,12 @@ footer{
             align-items: center;
             & > img {
                 border-radius: 0.1rem;
-                border: solid 2px #02C39A;
+                width: clamp(5rem, 10rem, 20rem);
+                height: clamp(5rem, 10rem, 20rem);
+            }
+            & .tenor-gif-embed{
+                border-radius: 0.1rem;
+                width: clamp(5rem, 10rem, 20rem);
             }
             & > div{
                 & > div {
@@ -228,6 +233,8 @@ footer{
                         cursor: pointer;
                         &:hover{
                             transform: translateY(-10%);
+                            fill: #00A896;
+                            filter: brightness(125%);
                         }
                     }
                 }

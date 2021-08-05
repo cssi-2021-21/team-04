@@ -1,5 +1,11 @@
 const container = document.querySelector("#havePlan");
 const friendList = document.querySelector("#friendList");
+const submitExercise = document.querySelector("#submitExercise");
+const exercise = document.querySelector("#exercise");
+const duration = document.querySelector("#duration");
+const editExercise = document.querySelector("#editExercise");
+const editDuration = document.querySelector("#editDuration");
+
 
 const updateProfile = (user) => {
   const profileName = document.querySelectorAll(".profileName");
@@ -7,7 +13,6 @@ const updateProfile = (user) => {
   const dateJoin = document.querySelector("#dateJoin");
   const profileEmail = document.querySelector("#profileEmail");
 
-  console.log(user)
   profileName.forEach(e=>e.innerHTML=user.displayName);
   const dateJoinObj = new Date(parseInt(user.metadata.a));
   dateJoin.innerHTML = dateJoinObj.getMonth()+1+"/"+dateJoinObj.getDate()+"/"+dateJoinObj.getFullYear();
@@ -37,7 +42,6 @@ const renderHTML = (data) => {
   let domTemplate = '';
   for(const exerciseData in data){
     let exerciseObj = data[exerciseData];
-    console.log(exerciseObj.name);
     //Profile exercise template
     const workoutDate = new Date(exerciseObj.timestamp);
     domTemplate+=`
@@ -54,7 +58,7 @@ const renderHTML = (data) => {
         <h2> ${workoutDate.getMonth()+1+"/"+workoutDate.getDate()+"/"+workoutDate.getFullYear()+", "+workoutDate.getHours()+":"+workoutDate.getMinutes()} </h2>
         <hr>
         <div>
-          <button> Edit </button>
+          <button onclick="editWorkout('${exerciseData}')"> Edit </button>
           <button onclick="APP.deleteWorkout('${exerciseData}')"> Delete </button>
         </div>
       </div>
@@ -62,6 +66,37 @@ const renderHTML = (data) => {
   };
   container.innerHTML = domTemplate;
 }
+var isEditing;
+const editWorkout = (workoutId) => {
+  isEditing = true;
+  openWorkoutModal(workoutId);
+};
+
+let currentWorkoutId;
+const openWorkoutModal = (workoutId) => {
+  modal.style.display = "grid"
+  workoutModal.style.display = "flex"
+  if(isEditing){
+    currentWorkoutId = workoutId || "";
+    APP.registerListener(DEFAULT_TARGETS.userData, (_, data) => {
+      if(data){
+        let getWorkout = data.workouts[workoutId];
+        exercise.value = getWorkout.name;
+        duration.value = getWorkout.duration;
+      }
+    })
+  }
+}
+saveWorkout.addEventListener("click",e=>{
+  if(isEditing){
+    APP.editWorkout(currentWorkoutId, {name:exercise.value, duration:parseInt(duration.value), calories:activities[exercise.value] * parseInt(duration.value)},(e)=>{
+      isEditing = false;
+      hideWorkoutModal();
+    });
+  }else{
+    APP.logWorkout(exercise.value, parseInt(duration.value), activities[exercise.value] * parseInt(duration.value), ()=>{hideWorkoutModal();});
+  }
+});
 
 APP.registerListener(DEFAULT_TARGETS.user, (_,user) => {
   if (user) {

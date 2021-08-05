@@ -12,7 +12,6 @@ const activities = {
 };
 
 for (let activity in activities) {
-    console.log(activity);
     let optionEx = document.createElement("option");
     optionEx.value = activity;
     optionEx.text = activity.charAt(0).toUpperCase() + activity.substr(1).toLowerCase();
@@ -22,72 +21,90 @@ for (let activity in activities) {
 
 //#region Charts
 //We just have to update the data to change everything; When FB is set up
-const data = {
-    labels: ['7/23', '7/24', '7/25', '7/26', '7/27', '7/28'],
-        datasets: [{
-            label: '# of Calories',
-            data: [2452, 3113, 1913, 2642, 2490, 2309],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-}
 
+// APP.registerListener(DEFAULT_TARGETS.userData, (_, data) => {
+//     if(data) {
+//         let workouts = data.workouts;
+//         console.log(workouts);
+//         let dates = []
+//         let calories = []
+//         for(workoutId in workouts){
+//             workout = workouts[workoutId];
+//             date = new Date(workout.timestamp)
+//             dates.push(date.getMonth()+1+"/"+date.getDate())
+//             calories.push(workout.calories);
+//         }
+//         updateGraphs(dates, calories)
+//     }
+// })
 
-//Actual Charts
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: data.labels,
-        datasets: [{
-            label: data.datasets[0].label,
-            data: data.datasets[0].data,
-            backgroundColor: data.datasets[0].backgroundColor,
-            borderColor: data.datasets[0].borderColor,
-            borderWidth: data.datasets[0].borderWidth
-        }]
-    },
-    options: {
-        layout: {
-        padding: 100
-        }
+// const updateGraphs = (dates, calories) => {
+    const data = {
+        labels: ['8/2', '8/3', '8/4', '8/5'],
+            datasets: [{
+                label: '# of Calories',
+                data: [2452, 3113, 1913, 2642],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1
+            }]
     }
-});
-
-var ctx = document.getElementById('myChart2').getContext('2d');
-var myChart = new Chart(ctx, {
-    type: 'pie',
-    data: {
-        labels: data.labels,
-        datasets: [{
-            label: data.datasets[0].label,
-            data: data.datasets[0].data,
-            backgroundColor: data.datasets[0].backgroundColor,
-            borderColor: data.datasets[0].borderColor,
-            borderWidth: data.datasets[0].borderWidth
-        }]
-    },
-    options: {
-        layout: {
-        padding: 100
+    
+    //Actual Charts
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: data.datasets[0].label,
+                data: data.datasets[0].data,
+                backgroundColor: data.datasets[0].backgroundColor,
+                borderColor: data.datasets[0].borderColor,
+                borderWidth: data.datasets[0].borderWidth
+            }]
+        },
+        options: {
+            layout: {
+            padding: 100
+            }
         }
-    }
-});
+    });
+    
+    var ctx = document.getElementById('myChart2').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: data.labels,
+            datasets: [{
+                label: data.datasets[0].label,
+                data: data.datasets[0].data,
+                backgroundColor: data.datasets[0].backgroundColor,
+                borderColor: data.datasets[0].borderColor,
+                borderWidth: data.datasets[0].borderWidth
+            }]
+        },
+        options: {
+            layout: {
+            padding: 100
+            }
+        }
+    });
+// }
 
 
 //Remove Bar Graph onresize || When it's less than 1100 
@@ -179,17 +196,19 @@ addWorkoutBtn.addEventListener('click', () => {
 const saveWorkout = document.querySelector("#submitExercise");
 const discardWorkout = document.querySelector("#discardExercise");
 
-saveWorkout.addEventListener('click', e => {
-    hideWorkoutModal();
-})
 
 discardWorkout.addEventListener('click', e => {
     hideWorkoutModal();
+    exercise.value = "";
+    duration.value = "";
 })
 
 const hideWorkoutModal = () => {
+    exercise.value = "";
+    duration.value = "";
     modal.style.display = "none"
     workoutModal.style.display = "none"
 }
+
 //#endregion
 
