@@ -23,3 +23,11 @@ console.log("main.js running.");
 APP.registerListener(DEFAULT_TARGETS.user, (_, user) => {
     console.log(user);
 }, false);
+
+
+const relocate = url => {
+    window.open(url, "_self")
+}
+
+
+AOS.init();
